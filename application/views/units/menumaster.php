@@ -34,7 +34,7 @@
       </div>
   </div>
   <div class="block-content">
-      <table class="table table-bordered table-striped js-dataTable-full"">
+      <table class="table table-bordered table-striped js-dataTable-full">
        <thead>
         <tr>
          <th class="text-center" >#</th>

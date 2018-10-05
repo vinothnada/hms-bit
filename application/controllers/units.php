@@ -501,6 +501,19 @@ public function editMenuMaster(){
 
 }   
 
+}
+
+
+public function deleteMenuMaster(){
+  $wherearr = $_GET['id'];
+
+  $result = $this->mcrud->deleteDataById('menu_master', $wherearr, 'id');
+  if ($result == true) {
+    $this->session->set_userdata('success', ' Menu has been deleted succesfully!');
+    redirect("units/menumaster");
+  }
+  $this->session->set_userdata('error', ' Error in deletion!');
+  redirect("units/menumaster");
 
 }
 
