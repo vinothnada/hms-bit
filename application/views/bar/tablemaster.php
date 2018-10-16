@@ -4,7 +4,7 @@
 		<div class="row items-push">
 			<div class="col-sm-7">
 				<h4 >
-					Restaurant Table Master
+					Bar Table Master
 				</h4>
 			</div>
 		</div>
@@ -52,9 +52,9 @@
            <?php } ?>
            <td class="text-center">
               <div class="btn-group">
-              <a href="<?= site_url("restaurant/editTableMaster?id=$items->id") ?>">                        
+              <a href="<?= site_url("bar/editTableMaster?id=$items->id") ?>">                        
                  <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></button></a>
-                 <a href="<?= site_url("restaurant/deleteTableMaster?id=$items->id") ?>">                            
+                 <a href="<?= site_url("bar/deleteTableMaster?id=$items->id") ?>">                            
                      <button class="btn btn-xs btn-default" type="button" onClick="return confirm('Are You Sure to Delete?')" data-toggle="tooltip" title="Remove" ><i class="fa fa-times"></i></button></a>
                  </div>
              </td>
@@ -76,7 +76,7 @@
             <h3 class="block-title">Add New Table</h3>
         </div>
         <div class="block-content block-content-narrow">
-            <form class="js-validation-form form-horizontal push-10-t push-10" action="<?=site_url("restaurant/addNewTable")?>"  method="post">
+            <form class="js-validation-form form-horizontal push-10-t push-10" action="<?=site_url("bar/addNewTable")?>"  method="post">
                 <div class="form-group">
                     <div class="col-sm-9">
                         <div class="form-material">
@@ -115,7 +115,7 @@
    <div class="form-group">
     <div class="col-sm-9">
         <div class="form-material">
-            <input class="form-control" type="text" id="cat" name="cat" value="Restaurant" readonly="readonly">
+            <input class="form-control" type="text" id="cat" name="cat" value="Bar" readonly="readonly">
             <label for="cat">Adding to</label>
         </div>
     </div>

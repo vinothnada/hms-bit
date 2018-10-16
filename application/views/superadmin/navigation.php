@@ -128,7 +128,19 @@
                                     <a href="<?=site_url('bar/booking');?>">Booking</a>
                                 </li>                                        
                             </ul>
-                        </li>                                                                                                                                                                        
+                        </li>
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Front Office</span></a>
+                            <ul>
+                                <li>
+                                    <a href="<?=site_url('frontoffice/home');?>">Home</a>
+                                </li>
+                                <li>
+                                    <a href="<?=site_url('bar/booking');?>">Booking</a>
+                                </li>                                        
+                            </ul>
+                        </li>                        
+
                     </ul>
                 </div>
                 <!-- END Side Content -->

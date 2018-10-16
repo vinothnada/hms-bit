@@ -1,19 +1,19 @@
 <?php
 
-class Restaurant extends CI_Controller{
+class Bar extends CI_Controller{
 
     public function __construct() {
         parent::__construct();
         $this->load->model('mcrud');
-        $this->load->model('mrestaurant');
+        $this->load->model('mbar');
     }
 
 	public function tablemaster(){
- 		$data['tabledata'] = $this->mrestaurant->getRetaurantTableData();
+ 		$data['tabledata'] = $this->mbar->getBarTableData();
 
         $this->load->view('includes/header_db');
         $this->load->view('superadmin/navigation');
-        $this->load->view('restaurant/tablemaster',$data);
+        $this->load->view('bar/tablemaster',$data);
         $this->load->view('includes/footer_inc_form');  		
 	}
 
@@ -27,7 +27,7 @@ class Restaurant extends CI_Controller{
 
        if ($this->form_validation->run() == FALSE) {
         $this->session->set_userdata('error', ' Table creation failed!');
-        redirect("restaurant/tablemaster");
+        redirect("bar/tablemaster");
       } else {
         $data = array(
             'tblnum'=>$this->input->post('tblnum'),
@@ -37,7 +37,7 @@ class Restaurant extends CI_Controller{
           );
         $result = $this->mcrud->addDataByForm('table_master',$data);
         $this->session->set_userdata('success', ' Table has been added succesfully!');
-        redirect("restaurant/tablemaster");
+        redirect("bar/tablemaster");
       }    
     }
 
@@ -51,7 +51,7 @@ class Restaurant extends CI_Controller{
 
         $this->load->view('includes/header_db');
         $this->load->view('superadmin/navigation');
-        $this->load->view('restaurant/editTableMaster',$data);
+        $this->load->view('bar/editTableMaster',$data);
         $this->load->view('includes/footer_inc_form');      
       }else{
        $whereArr = $this->input->post('id');    
@@ -63,7 +63,7 @@ class Restaurant extends CI_Controller{
 
        if ($this->form_validation->run() == FALSE) {
         $this->session->set_userdata('error', ' Table updation failed!');
-        redirect("restaurant/tablemaster");
+        redirect("bar/tablemaster");
 
       } else {
 
@@ -77,7 +77,7 @@ class Restaurant extends CI_Controller{
         $result = $this->mcrud->updateDataByForm('table_master', $data, array('id' => $whereArr));
 
         $this->session->set_userdata('success', ' Table has been updated succesfully!');
-        redirect("restaurant/tablemaster");
+        redirect("bar/tablemaster");
       }
 
     }        
@@ -90,10 +90,10 @@ class Restaurant extends CI_Controller{
     $result = $this->mcrud->deleteDataById('table_master', $wherearr, 'id');
     if ($result == true) {
       $this->session->set_userdata('success', ' Table been deleted succesfully!');
-      redirect("restaurant/tablemaster");
+      redirect("bar/tablemaster");
     }
     $this->session->set_userdata('error', ' Error in deletion!');
-    redirect("restaurant/tablemaster");
+    redirect("bar/tablemaster");
 
   }
 
