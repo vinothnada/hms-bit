@@ -123,190 +123,56 @@
 		<div class="row">			
             <div class="col-sm-12">
                 <div class="block block-themed">
+
+                <?php foreach ($roomsdata as $item) {
+                    echo $item->name;
+                    echo $item->type;
+                    echo $item->roomno;
+                    echo $item->availibility;
+                } ?>
+
+                <?php foreach ($floortypes as $item) { ?>
                     <div class="block-header bg-muted">
                         <ul class="block-options">
                             <li>
                                 <button type="button" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
                             </li>
                         </ul>
-                        <h3 class="block-title">Gray Dark</h3>
+                        <h3 class="block-title"><?= $item->name ?></h3>
                     </div>
                     <div class="block-content">
                         <div class="row">
-                        	
-                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong>|
-                                    <strong>1800</strong>
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
-                        </div>                        <div class="col-sm-3">
-                            <a class="block block-link-hover1 text-center" href="javascript:void(0)">
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>705</strong> 
-                                </div>                            
-                                <div class="block-content block-content-full bg-primary">
-                                    <i class="fa fa-hotel fa-5x text-white"></i>
-                                </div>
-                                <div class="block-content border block-content-full block-content-mini">
-                                    <strong>1800</strong> Likes
-                                </div>
-                            </a>
+                            <?php foreach ($roomsdata as $item2) { ?>
+                                <?php if ($item2->name == $item->name) { ?>
+                                    <div class="col-sm-2">
+                                        <a class="block block-link-hover1 text-center" href="javascript:void(0)">
+                                            <div class="block-content border block-content-full block-content-mini">
+                                                <strong>Room#<?=$item2->roomno;?></strong> 
+                                            </div>
+                                            <?php $classstring = "block-content block-content-full bg-"; ?>
+                                            <?php if ($item2->availibility == "Available") {
+                                                $classstring .= "success";
+                                            }elseif ($item2->availibility == "Full") {
+                                                $classstring .= "danger";
+                                            }elseif ($item2->availibility == "Maintenance") {
+                                                $classstring .= "Warning";
+                                            }elseif ($item2->availibility == "Housekeeping") {
+                                                $classstring .= "info";
+                                            } ?>                            
+                                            <div class="<?= $classstring;?>">
+                                                <i class="fa fa-hotel fa-4x text-white"></i>
+                                            </div>
+                                            <div class="block-content border block-content-full block-content-mini">
+                                                <strong>1800</strong>|
+                                                <strong>1800</strong>
+                                            </div>
+                                        </a>
+                                    </div> 
+                                <?php } ?>
+                            <?php } ?>                        
                         </div>
-
-                        </div>
-                    </div>
+                    </div>                    
+                <?php } ?>
                 </div>
             </div>
 		</div>
