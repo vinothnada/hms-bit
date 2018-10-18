@@ -149,7 +149,6 @@
                                 <option value="">Please Select</option>
                                 <option value="Available">Available</option>
                                 <option value="Maintanance">Maintanance</option>
-                                <option value="Full">Full</option>
                             </select> <label for="availibility">Status</label>
                         </div>
                         </div>

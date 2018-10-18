@@ -63,9 +63,10 @@
                         <div class="form-material">
                             <select class="form-control" id="availibility"
                                     name="availibility">
-                                <option value="Available" <?php if ($roommaster[0]->toilet == "Available"){ echo "selected = 'selected'"; }?>>Available</option>
-                                <option value="Maintanance" <?php if ($roommaster[0]->toilet == "Maintanance"){ echo "selected = 'selected'"; }?>>Maintanance</option>
-                                <option value="Full" <?php if ($roommaster[0]->toilet == "Full"){ echo "selected = 'selected'"; }?>>Full</option>
+                                <option value="Available" <?php if ($roommaster[0]->availibility == "Available"){ echo "selected = 'selected'"; }?>>Available</option>
+                                <option value="Maintanance" <?php if ($roommaster[0]->availibility == "Maintanance"){ echo "selected = 'selected'"; }?>>Maintanance</option>
+                                <option value="Occupied" <?php if ($roommaster[0]->availibility == "Occupied"){ echo "selected = 'selected'"; }?>>Occupied</option>
+                                <option value="Housekeeping" <?php if ($roommaster[0]->availibility == "Housekeeping"){ echo "selected = 'selected'"; }?>>Housekeeping</option>
                             </select> <label for="availibility">Status</label>
                         </div>
                         </div>

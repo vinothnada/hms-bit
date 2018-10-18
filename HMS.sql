@@ -16,6 +16,15 @@
 CREATE DATABASE IF NOT EXISTS `hms` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `hms`;
 
+-- Dumping structure for table hms.booking
+CREATE TABLE IF NOT EXISTS `booking` (
+  `id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hms.booking: ~0 rows (approximately)
+/*!40000 ALTER TABLE `booking` DISABLE KEYS */;
+/*!40000 ALTER TABLE `booking` ENABLE KEYS */;
+
 -- Dumping structure for table hms.departments
 CREATE TABLE IF NOT EXISTS `departments` (
   `deptid` int(11) NOT NULL AUTO_INCREMENT,
@@ -87,6 +96,27 @@ INSERT INTO `floor_type` (`id`, `name`, `building`) VALUES
 	(4, 'Floor3', 'Building1');
 /*!40000 ALTER TABLE `floor_type` ENABLE KEYS */;
 
+-- Dumping structure for table hms.guest
+CREATE TABLE IF NOT EXISTS `guest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) DEFAULT NULL,
+  `firstname` varchar(100) DEFAULT NULL,
+  `secondname` varchar(50) DEFAULT NULL,
+  `gender` enum('Male','Female') DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `mobile` int(50) DEFAULT NULL,
+  `nationality` varchar(50) DEFAULT NULL,
+  `identityType` varchar(50) DEFAULT NULL,
+  `identityNo` varchar(50) DEFAULT NULL,
+  `dob` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hms.guest: ~0 rows (approximately)
+/*!40000 ALTER TABLE `guest` DISABLE KEYS */;
+/*!40000 ALTER TABLE `guest` ENABLE KEYS */;
+
 -- Dumping structure for table hms.hotel_info
 CREATE TABLE IF NOT EXISTS `hotel_info` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -139,17 +169,17 @@ CREATE TABLE IF NOT EXISTS `menu_master` (
   KEY `itemunit` (`itemunit`),
   CONSTRAINT `menu_master_ibfk_1` FOREIGN KEY (`itemcat`) REFERENCES `menu_category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `menu_master_ibfk_2` FOREIGN KEY (`itemunit`) REFERENCES `menu_unit` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hms.menu_master: ~6 rows (approximately)
+-- Dumping data for table hms.menu_master: ~7 rows (approximately)
 /*!40000 ALTER TABLE `menu_master` DISABLE KEYS */;
 INSERT INTO `menu_master` (`id`, `itemname`, `rate`, `itemcat`, `itemunit`, `status`) VALUES
 	(1, 'hytuwww', 2563, 3, 4, 'Active'),
-	(2, 'ccv', 2232, 4, 5, 'Active'),
 	(3, 'bgt', 2555, 2, 4, 'Active'),
 	(4, 'hytu', 2563, 2, 3, 'Active'),
 	(5, 'samj', 6546, 3, 3, 'Blocked'),
-	(6, 'lop', 531, 2, 3, 'Active');
+	(6, 'lop', 531, 2, 3, 'Active'),
+	(7, 'khkhkh', 54645, 5, 3, 'Active');
 /*!40000 ALTER TABLE `menu_master` ENABLE KEYS */;
 
 -- Dumping structure for table hms.menu_unit
@@ -199,15 +229,16 @@ CREATE TABLE IF NOT EXISTS `room_master` (
   KEY `floortype` (`floortype`),
   CONSTRAINT `room_master_ibfk_1` FOREIGN KEY (`roomtype`) REFERENCES `room_type` (`id`),
   CONSTRAINT `room_master_ibfk_2` FOREIGN KEY (`floortype`) REFERENCES `floor_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hms.room_master: ~4 rows (approximately)
+-- Dumping data for table hms.room_master: ~5 rows (approximately)
 /*!40000 ALTER TABLE `room_master` DISABLE KEYS */;
 INSERT INTO `room_master` (`id`, `roomno`, `roomtype`, `floortype`, `toilet`, `availibility`) VALUES
 	(1, 1, 3, 3, 'English', 'Available'),
 	(2, 2, 1, 1, 'English', 'Available'),
 	(3, 3, 2, 2, 'English', 'Available'),
-	(4, 4, 2, 2, 'English', 'Full');
+	(4, 4, 2, 2, 'English', 'Occupied'),
+	(5, 5, 4, 4, 'English', 'Available');
 /*!40000 ALTER TABLE `room_master` ENABLE KEYS */;
 
 -- Dumping structure for table hms.room_type
@@ -223,11 +254,30 @@ CREATE TABLE IF NOT EXISTS `room_type` (
 -- Dumping data for table hms.room_type: ~4 rows (approximately)
 /*!40000 ALTER TABLE `room_type` DISABLE KEYS */;
 INSERT INTO `room_type` (`id`, `tariff`, `type`, `status`, `remarks`) VALUES
-	(1, 6000, 'DELUXE ROOMS', 'Active', ''),
-	(2, 11000, 'EXECUTIVE ROOMS', 'Active', ''),
-	(3, 4000, 'SINGLE ROOMS', 'Active', ''),
-	(4, 7000, 'TWIN ROOMS', 'Active', 'idle for two people');
+	(1, 6000, 'DELUXE ROOM', 'Active', 'Deluxe type rooms'),
+	(2, 11000, 'EXECUTIVE ROOM', 'Active', 'Executive type'),
+	(3, 4000, 'SINGLE ROOM', 'Active', 'One person'),
+	(4, 7000, 'TWIN ROOM', 'Active', 'idle for two people');
 /*!40000 ALTER TABLE `room_type` ENABLE KEYS */;
+
+-- Dumping structure for table hms.table_master
+CREATE TABLE IF NOT EXISTS `table_master` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tblnum` int(11) NOT NULL DEFAULT '0',
+  `seats` int(11) NOT NULL DEFAULT '0',
+  `status` enum('Active','Blocked') NOT NULL,
+  `cat` enum('Bar','Restaurant') NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- Dumping data for table hms.table_master: ~4 rows (approximately)
+/*!40000 ALTER TABLE `table_master` DISABLE KEYS */;
+INSERT INTO `table_master` (`id`, `tblnum`, `seats`, `status`, `cat`) VALUES
+	(1, 1, 10, 'Blocked', 'Restaurant'),
+	(2, 2, 6, 'Active', 'Restaurant'),
+	(3, 3, 4, 'Active', 'Restaurant'),
+	(4, 5, 4, 'Active', 'Bar');
+/*!40000 ALTER TABLE `table_master` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
