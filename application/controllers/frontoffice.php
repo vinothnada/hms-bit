@@ -7,6 +7,8 @@ class Frontoffice extends CI_Controller{
     parent::__construct();
     $this->load->model('mcrud');
     $this->load->model('msadmin');
+    $this->load->model('mbooking');
+
   }
 
 
@@ -27,6 +29,9 @@ class Frontoffice extends CI_Controller{
     if (isset($_GET['id'])) {
       $data['selectedroomno'] = $_GET['id'];
     }
+
+    $data['roomInfo']  = $this->mbooking->getRoomInfo($_GET['id']);
+    $data['bookinginfo']  = $this->mcrud->getAllDataDesc('booking_room','booking_no');
 
     $this->load->view('includes/header_db');
     $this->load->view('superadmin/navigation');
