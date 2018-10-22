@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2018 at 09:49 AM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 5.6.36
+-- Generation Time: Oct 22, 2018 at 04:11 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,25 +32,19 @@ CREATE TABLE `booking_room` (
   `id` int(11) NOT NULL,
   `booking_no` int(11) DEFAULT NULL,
   `room_no` int(11) DEFAULT NULL,
-  `customer_id` int(11) DEFAULT NULL,
+  `guest_id` int(11) DEFAULT NULL,
   `chkin_date` datetime DEFAULT NULL,
   `chkout_date` datetime DEFAULT NULL,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `mofified_By` varchar(45) DEFAULT NULL
+  `mofified_By` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `customer`
+-- Dumping data for table `booking_room`
 --
 
-CREATE TABLE `customer` (
-  `id` int(11) NOT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `nic` varchar(45) DEFAULT NULL,
-  `address` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `booking_room` (`id`, `booking_no`, `room_no`, `guest_id`, `chkin_date`, `chkout_date`, `modified_date`, `mofified_By`) VALUES
+(0, 1, 2, 1, '2018-10-21 18:47:37', '2018-10-22 18:47:39', '2018-10-21 18:51:54', 'Vicky Nada');
 
 -- --------------------------------------------------------
 
@@ -137,6 +131,34 @@ INSERT INTO `floor_type` (`id`, `name`, `building`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `guests`
+--
+
+CREATE TABLE `guests` (
+  `id` int(11) NOT NULL,
+  `title` varchar(50) DEFAULT NULL,
+  `firstname` varchar(100) DEFAULT NULL,
+  `lastname` varchar(100) DEFAULT NULL,
+  `gender` enum('Male','Female') DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `mobile` int(50) DEFAULT NULL,
+  `nationality` varchar(50) DEFAULT NULL,
+  `identityType` float DEFAULT NULL,
+  `identityNo` varchar(50) DEFAULT NULL,
+  `dob` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `guests`
+--
+
+INSERT INTO `guests` (`id`, `title`, `firstname`, `lastname`, `gender`, `address`, `city`, `mobile`, `nationality`, `identityType`, `identityNo`, `dob`) VALUES
+(1, 'Mr', 'Ram', 'Gopal', 'Male', '16', 'Colombo', 13456, 'Srilankan', 0, '902900085V', '2018-10-19');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hotel_info`
 --
 
@@ -204,11 +226,11 @@ CREATE TABLE `menu_master` (
 
 INSERT INTO `menu_master` (`id`, `itemname`, `rate`, `itemcat`, `itemunit`, `status`) VALUES
 (1, 'hytuwww', 2563, 3, 4, 'Active'),
-(2, 'ccv', 2232, 4, 5, 'Active'),
 (3, 'bgt', 2555, 2, 4, 'Active'),
 (4, 'hytu', 2563, 2, 3, 'Active'),
 (5, 'samj', 6546, 3, 3, 'Blocked'),
-(6, 'lop', 531, 2, 3, 'Active');
+(6, 'lop', 531, 2, 3, 'Active'),
+(7, 'khkhkh', 54645, 5, 3, 'Active');
 
 -- --------------------------------------------------------
 
@@ -277,7 +299,8 @@ INSERT INTO `room_master` (`id`, `roomno`, `roomtype`, `floortype`, `toilet`, `a
 (1, 1, 3, 3, 'English', 'Available'),
 (2, 2, 1, 1, 'English', 'Available'),
 (3, 3, 2, 2, 'English', 'Available'),
-(4, 4, 2, 2, 'English', 'Full');
+(4, 4, 2, 2, 'English', 'Occupied'),
+(5, 5, 4, 4, 'English', 'Available');
 
 -- --------------------------------------------------------
 
@@ -298,10 +321,34 @@ CREATE TABLE `room_type` (
 --
 
 INSERT INTO `room_type` (`id`, `tariff`, `type`, `status`, `remarks`) VALUES
-(1, 6000, 'DELUXE ROOMS', 'Active', ''),
-(2, 11000, 'EXECUTIVE ROOMS', 'Active', ''),
-(3, 4000, 'SINGLE ROOMS', 'Active', ''),
-(4, 7000, 'TWIN ROOMS', 'Active', 'idle for two people');
+(1, 6000, 'DELUXE ROOM', 'Active', 'Deluxe type rooms'),
+(2, 11000, 'EXECUTIVE ROOM', 'Active', 'Executive type'),
+(3, 4000, 'SINGLE ROOM', 'Active', 'One person'),
+(4, 7000, 'TWIN ROOM', 'Active', 'idle for two people');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `table_master`
+--
+
+CREATE TABLE `table_master` (
+  `id` int(11) NOT NULL,
+  `tblnum` int(11) NOT NULL DEFAULT '0',
+  `seats` int(11) NOT NULL DEFAULT '0',
+  `status` enum('Active','Blocked') NOT NULL,
+  `cat` enum('Bar','Restaurant') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `table_master`
+--
+
+INSERT INTO `table_master` (`id`, `tblnum`, `seats`, `status`, `cat`) VALUES
+(1, 1, 10, 'Blocked', 'Restaurant'),
+(2, 2, 6, 'Active', 'Restaurant'),
+(3, 3, 4, 'Active', 'Restaurant'),
+(4, 5, 4, 'Active', 'Bar');
 
 --
 -- Indexes for dumped tables
@@ -311,15 +358,9 @@ INSERT INTO `room_type` (`id`, `tariff`, `type`, `status`, `remarks`) VALUES
 -- Indexes for table `booking_room`
 --
 ALTER TABLE `booking_room`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`customer_id`),
-  ADD KEY `room_no` (`room_no`);
-
---
--- Indexes for table `customer`
---
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`id`);
+  ADD KEY `guest_id` (`guest_id`),
+  ADD KEY `room_id` (`room_no`),
+  ADD KEY `mofified_By` (`mofified_By`);
 
 --
 -- Indexes for table `departments`
@@ -333,12 +374,19 @@ ALTER TABLE `departments`
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`empid`),
   ADD KEY `department` (`department`),
-  ADD KEY `role` (`role`);
+  ADD KEY `role` (`role`),
+  ADD KEY `name` (`name`);
 
 --
 -- Indexes for table `floor_type`
 --
 ALTER TABLE `floor_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `guests`
+--
+ALTER TABLE `guests`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -379,12 +427,19 @@ ALTER TABLE `roles`
 ALTER TABLE `room_master`
   ADD PRIMARY KEY (`id`),
   ADD KEY `roomtype` (`roomtype`),
-  ADD KEY `floortype` (`floortype`);
+  ADD KEY `floortype` (`floortype`),
+  ADD KEY `roomno` (`roomno`);
 
 --
 -- Indexes for table `room_type`
 --
 ALTER TABLE `room_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `table_master`
+--
+ALTER TABLE `table_master`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -410,6 +465,12 @@ ALTER TABLE `floor_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `guests`
+--
+ALTER TABLE `guests`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `hotel_info`
 --
 ALTER TABLE `hotel_info`
@@ -425,7 +486,7 @@ ALTER TABLE `menu_category`
 -- AUTO_INCREMENT for table `menu_master`
 --
 ALTER TABLE `menu_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `menu_unit`
@@ -443,12 +504,18 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `room_master`
 --
 ALTER TABLE `room_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `room_type`
 --
 ALTER TABLE `room_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `table_master`
+--
+ALTER TABLE `table_master`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
@@ -459,8 +526,9 @@ ALTER TABLE `room_type`
 -- Constraints for table `booking_room`
 --
 ALTER TABLE `booking_room`
-  ADD CONSTRAINT `booking_room_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
-  ADD CONSTRAINT `booking_room_ibfk_2` FOREIGN KEY (`room_no`) REFERENCES `room_master` (`id`);
+  ADD CONSTRAINT `booking_room_ibfk_1` FOREIGN KEY (`guest_id`) REFERENCES `guests` (`id`),
+  ADD CONSTRAINT `booking_room_ibfk_2` FOREIGN KEY (`room_no`) REFERENCES `room_master` (`roomno`),
+  ADD CONSTRAINT `booking_room_ibfk_3` FOREIGN KEY (`mofified_By`) REFERENCES `employee` (`name`);
 
 --
 -- Constraints for table `employee`
