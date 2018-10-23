@@ -1,4 +1,4 @@
-
+    
 <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
     <!-- Sidebar -->
     <nav id="sidebar">
@@ -23,6 +23,7 @@
                                 <a data-toggle="theme" data-theme="default" tabindex="-1" href="javascript:void(0)">
                                     <i class="fa fa-circle text-default pull-right"></i> <span class="font-w600">Default</span>
                                 </a>
+
                             </li>
                             <li>
                                 <a data-toggle="theme" data-theme="<?= base_url(); ?>assets/css/themes/amethyst.min.css" tabindex="-1" href="javascript:void(0)">
@@ -81,7 +82,7 @@
                                     <a href="<?=site_url('sadmin/hotelInfo');?>">Hotel Info</a>
                                 </li>
                                 <li>
-                                    <a href="base_ui_blocks_api.html">Departments</a>
+                                    <a href="<?=site_url('taxservices');?>">Tax and services</a>
                                 </li>
                             </ul>
                         </li>
