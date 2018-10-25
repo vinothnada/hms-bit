@@ -33,36 +33,47 @@
                         <h3 class="block-title">Guest Information</h3>
                     </div>
                     <div class="block-content block-content-narrow">
-                        <!-- jQuery Validation (.js-validation-bootstrap class is initialized in js/pages/base_forms_validation.js) -->
-                        <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
                         <form class="js-validation-bootstrap form-horizontal" action="base_forms_validation.html" method="post">
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="val-username">Username <span class="text-danger">*</span></label>
+                                <label class="col-md-4 control-label" for="title">Title</label>
                                 <div class="col-md-7">
-                                    <input class="form-control" type="text" id="val-username" name="val-username" placeholder="Choose a nice username..">
+                                    <select class="js-select2 form-control" id="title" name="title" style="width: 100%;" data-placeholder="Choose one..">
+                                        <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                                        <option value="Dr">Dr</option>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Ms">Ms</option>
+                                    </select>
+                                </div>
+                            </div>                        
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="firstname">First Name <span class="text-danger">*</span></label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="firstname" name="firstname" placeholder="Enter First name">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="val-email">Email <span class="text-danger">*</span></label>
+                                <label class="col-md-4 control-label" for="lastname">Last Name <span class="text-danger">*</span></label>
                                 <div class="col-md-7">
-                                    <input class="form-control" type="text" id="val-email" name="val-email" placeholder="Enter your valid email..">
+                                    <input class="form-control" type="text" id="lastname" name="lastname" placeholder="Enter Last name">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="val-password">Password <span class="text-danger">*</span></label>
+                                <label class="col-md-4 control-label" for="gender">Gender</label>
                                 <div class="col-md-7">
-                                    <input class="form-control" type="password" id="val-password" name="val-password" placeholder="Choose a good one..">
+                                    <select class="js-select2 form-control" id="gender" name="gender" style="width: 100%;" data-placeholder="Choose one..">
+                                        <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
                                 </div>
                             </div>
-                            
                             <div class="form-group">
-                                <label class="col-md-4 control-label"><a data-toggle="modal" data-target="#modal-terms" href="#">Terms</a> <span class="text-danger">*</span></label>
-                                <div class="col-md-8">
-                                    <label class="css-input css-checkbox css-checkbox-primary" for="val-terms">
-                                        <input type="checkbox" id="val-terms" name="val-terms" value="1"><span></span> I agree to the terms
-                                    </label>
+                                <label class="col-md-4 control-label" for="address">Address<span class="text-danger">*</span></label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="address" name="address" placeholder="Resident / Office">
                                 </div>
-                            </div>
+                            </div>                                                                                     
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
                                     <button class="btn btn-sm btn-primary" type="submit">Submit</button>
