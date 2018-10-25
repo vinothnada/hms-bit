@@ -14,7 +14,7 @@ class Taxservices extends CI_Controller{
 		$data["taxservicesdata"] = $this->mcrud->getAllDataDesc('taxservices','modifiedDate');
 		$this->load->view('includes/header_db');
 		$this->load->view('superadmin/navigation');
-		$this->load->view('taxservices/index',$getAllDataDesc	);
+		$this->load->view('taxservices/index',$data);
 		$this->load->view('includes/footer_db');		
 	}
 } 

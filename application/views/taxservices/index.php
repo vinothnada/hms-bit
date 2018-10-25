@@ -37,7 +37,7 @@
 		?>
 
 		<div class="row">
-			<div class="col-sm-6 col-lg-3" style="margin-left: 12%">
+			<div class="col-sm-6 col-lg-3" data-toggle="modal" data-target="#modal-popin-add" style="margin-left: 12%">
 				<a class="block block-rounded block-link-hover3 text-center" href="javascript:void(0)">
 					<div class="block-content block-content-full">
 						<div class="h1 font-w700"><?= $taxArray[0]; ?><span class="h2 text-muted">&nbsp;%</span></div>
@@ -48,7 +48,7 @@
 					</div>
 				</a>
 			</div>
-			<div class="col-sm-6 col-lg-3">
+			<div class="col-sm-6 col-lg-3" data-toggle="modal" data-target="#modal-popin-add">
 				<a class="block block-rounded block-link-hover3 text-center" href="javascript:void(0)">
 					<div class="block-content block-content-full">
 						<div class="h1 font-w700"><?= $restaurantServicesArray[0]; ?><span class="h2 text-muted">&nbsp;%</span></div>
@@ -59,7 +59,7 @@
 					</div>
 				</a>
 			</div>
-			<div class="col-sm-6 col-lg-3">
+			<div class="col-sm-6 col-lg-3" data-toggle="modal" data-target="#modal-popin-add">
 				<a class="block block-rounded block-link-hover3 text-center" href="javascript:void(0)">
 					<div class="block-content block-content-full">
 						<div class="h1 font-w700"><?= $barServicesArray[0]; ?><span class="h2 text-muted">&nbsp;%</span></div>
@@ -106,3 +106,60 @@
 		</div>
 	</div>
 </main>
+
+<!-- Fade In Modal -->
+<div class="modal fade" id="modal-popin-add" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+
+            <form class="js-validation-material form-horizontal push-10-t push-10"  action="<?= site_url("Price/setRates"); ?>" method="post"> 
+                <div class="block block-themed block-transparent remove-margin-b">
+                    <div class="block-header bg-primary-dark">
+                        <ul class="block-options">
+                            <li>
+                                <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                            </li>
+                        </ul>
+                        <h3 class="block-title">Update Currency </h3>
+                    </div>
+                    <div class="block-content">                      
+                        <div class="form-group">
+                            <input type="hidden" name="Product_Id" id ="Product_Id" value="">
+                            <div class="col-xs-6">
+                                <div class="form-material">
+                                    <select class="form-control" id="Currency"
+                                            name="Currency">
+                                        <option value="CAD">CAD</option>
+                                        <option value="USD">USD</option>
+                                        <option value="GBP">GBP</option>
+                                        <option value="Euro">Euro</option>
+                                    </select> <label for="Currency">Currency</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">                                    
+                                <div class="form-material">
+                                    <input class="form-control" type="text" id="Value"
+                                           name="Value"
+                                           placeholder="Please enter new rate in LKR"> <label
+                                           for="Value">New Rate</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">                                    
+                                <div class="form-material">
+                                    <input class="form-control" type="hidden" id="Update_By"
+                                           name="Update_By" value="<?php echo $this->session->userdata('logged_user'); ?>">
+                                </div>
+                            </div>                            
+                        </div>                         
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+                    <button class="btn btn-sm btn-primary" type="Submit"><i class="fa fa-check"></i> Set</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- END Fade In Modal -->
