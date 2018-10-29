@@ -1,3 +1,19 @@
+<?php 
+$taxArray = array();
+$restaurantServicesArray = array();  
+$barServicesArray = array();     
+
+foreach ($taxservicesdata as $items) {
+    if ($items->name == "Bar") {
+        array_push($barServicesArray, $items->value);
+    }elseif($items->name == "Restaurant"){
+        array_push($restaurantServicesArray, $items->value);
+    }elseif($items->name == "Tax"){
+        array_push($taxArray, $items->value);
+    }
+}
+?>
+
 <!-- Main Container -->
 <main id="main-container">
 
@@ -24,21 +40,21 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <!-- Bootstrap Forms Validation -->
-                <br>
-                <div class="block">
-                    <div class="block-header">  
-                        <h3 class="block-title">Guest Information</h3>
-                    </div>
-                    <div class="block-content block-content-narrow">
-                        <form class="js-validation-bootstrap form-horizontal" action="base_forms_validation.html" method="post">
+        <form class="js-validation-form form-horizontal" action="base_forms_validation.html" method="post">
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Bootstrap Forms Validation -->
+                    <br>
+                    <div class="block">
+                        <div class="block-header">  
+                            <h3 class="block-title">Guest Information</h3>
+                        </div>
+                        <div class="block-content block-content-narrow">
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="title">Title</label>
                                 <div class="col-md-7">
-                                    <select class="js-select2 form-control" id="title" name="title" style="width: 100%;" data-placeholder="Choose one..">
-                                        <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                                    <select class="form-control" id="title" name="title" style="width: 100%;" data-placeholder="Choose one..">
+                                        <option>Choose One..</option>
                                         <option value="Dr">Dr</option>
                                         <option value="Mr">Mr</option>
                                         <option value="Mrs">Mrs</option>
@@ -47,43 +63,136 @@
                                 </div>
                             </div>                        
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="firstname">First Name <span class="text-danger">*</span></label>
+                                <label class="col-md-4 control-label" for="firstname">First Name</label>
                                 <div class="col-md-7">
                                     <input class="form-control" type="text" id="firstname" name="firstname" placeholder="Enter First name">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="lastname">Last Name <span class="text-danger">*</span></label>
+                                <label class="col-md-4 control-label" for="lastname">Last Name</label>
                                 <div class="col-md-7">
                                     <input class="form-control" type="text" id="lastname" name="lastname" placeholder="Enter Last name">
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-4 control-label" for="identityType">Identity Type</label>
+                                <div class="col-md-7">
+                                    <select class="form-control" id="identityType" name="identityType" style="width: 100%;" data-placeholder="Choose one..">
+                                        <option>Choose One..</option>
+                                        <option value="Nic">NIC</option>
+                                        <option value="DrivingLicense">Driving License</option>
+                                        <option value="Passport">Passport</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="identityNo">Identity Number</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="identityNo" name="identityNo" placeholder="Identity Number">
+                                </div>
+                            </div>                            
+                            <div class="form-group">
                                 <label class="col-md-4 control-label" for="gender">Gender</label>
                                 <div class="col-md-7">
-                                    <select class="js-select2 form-control" id="gender" name="gender" style="width: 100%;" data-placeholder="Choose one..">
-                                        <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
+                                    <select class="form-control" id="gender" name="gender" style="width: 100%;" data-placeholder="Choose one..">
+                                        <option>Choose One..</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="address">Address<span class="text-danger">*</span></label>
+                                <label class="col-md-4 control-label" for="address">Addres</label>
                                 <div class="col-md-7">
                                     <input class="form-control" type="text" id="address" name="address" placeholder="Resident / Office">
                                 </div>
-                            </div>                                                                                     
+                            </div>
                             <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button class="btn btn-sm btn-primary" type="submit">Submit</button>
+                                <label class="col-md-4 control-label" for="city">Cit</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="city" name="city" placeholder="Enter City">
                                 </div>
                             </div>
-                        </form>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="mobile">Contact number</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="mobile" name="mobile" placeholder="Contact number">
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="nationality">Nationality</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="nationality" name="nationality" placeholder="Enter Nationality">
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <!-- Bootstrap Forms Validation -->
                 </div>
-                <!-- Bootstrap Forms Validation -->
+                <div class="col-lg-6">
+                    <!-- Bootstrap Forms Validation -->
+                    <br>
+                    <div class="block">
+                        <div class="block-header">  
+                            <h3 class="block-title">Booking Information</h3>
+                        </div>
+                        <div class="block-content block-content-narrow">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="example-datetimepicker3">Check-In-Date</label>
+                                <div class="col-md-7">
+                                    <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                        <input class="form-control" type="text" id="example-datetimepicker3" name="chkin_date" placeholder="Choose a date..">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="example-datetimepicker3">Check-Out-Date</label>
+                                <div class="col-md-7">
+                                    <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                        <input class="form-control" type="text" id="example-datetimepicker3" name="chkout_date" placeholder="Choose a date..">
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="tariff">Tariff</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="tariff" name="tariff" value="<?=$roomInfo[0]->tariff; ?>" readonly>
+                                </div>
+                            </div>                            
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="tax">Tax</label>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="tax" name="tax" value="<?= $taxArray[0]; ?>&nbsp;%" readonly>
+                                </div>
+                            </div>                            
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="tariffwithtax">Tariff with Tax</label>
+                                <?php $tariffwithtax = $roomInfo[0]->tariff + $roomInfo[0]->tariff*$taxArray[0]/100; ?>
+                                <div class="col-md-7">
+                                    <input class="form-control" type="text" id="tariffwithtax" name="tariffwithtax" value="<?=$tariffwithtax; ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4">
+                                    <button class="btn btn-sm btn-primary" type="submit">Save Booking</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bootstrap Forms Validation -->
+                </div>            
             </div>
-        </div>
+        </form>
     </div>
 </main>
+
+<!-- Page JS Plugins -->
+<script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/custom/base_pages_roomBooking.js"></script>

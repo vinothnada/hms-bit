@@ -63,11 +63,15 @@
         <script src="<?= base_url(); ?>assets/js/core/jquery.placeholder.min.js"></script>
         <script src="<?= base_url(); ?>assets/js/core/js.cookie.min.js"></script>
         <script src="<?= base_url(); ?>assets/js/app.js"></script>
+        <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datetimepicker/moment.min.js"></script>
+        <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
 
         <script>
             jQuery(function () {
                 // Init page helpers (Appear + CountTo plugins)
-                App.initHelpers(['appear', 'appear-countTo']);
+                App.initHelpers(['datepicker', 'datetimepicker','appear', 'appear-countTo']);
             });
         </script>
                 <!-- Page JS Plugins -->
@@ -76,5 +80,8 @@
 
         <!-- Page JS Code -->
         <script src="<?= base_url(); ?>assets/js/pages/base_tables_datatables.js"></script>
+
+
+
     </body>
 </html>

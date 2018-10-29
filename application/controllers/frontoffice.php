@@ -32,6 +32,7 @@ class Frontoffice extends CI_Controller{
 
     $data['roomInfo']  = $this->mbooking->getRoomInfo($_GET['id']);
     $data['bookinginfo']  = $this->mcrud->getAllDataDesc('booking_room','booking_no');
+    $data["taxservicesdata"] = $this->mcrud->getAllDataDesc('taxservices','modifiedDate');
 
     $this->load->view('includes/header_db');
     $this->load->view('superadmin/navigation');

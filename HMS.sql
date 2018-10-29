@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2018 at 04:11 AM
+-- Generation Time: Oct 29, 2018 at 03:07 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -350,6 +350,34 @@ INSERT INTO `table_master` (`id`, `tblnum`, `seats`, `status`, `cat`) VALUES
 (3, 3, 4, 'Active', 'Restaurant'),
 (4, 5, 4, 'Active', 'Bar');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taxservices`
+--
+
+CREATE TABLE `taxservices` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `type` enum('Tax','ServiceCharge') DEFAULT NULL,
+  `value` double NOT NULL,
+  `modifiedDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedBy` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxservices`
+--
+
+INSERT INTO `taxservices` (`id`, `name`, `type`, `value`, `modifiedDate`, `modifiedBy`) VALUES
+(1, 'Tax', 'Tax', 4.5, '2018-10-23 00:13:46', 'Admin'),
+(2, 'Bar', 'ServiceCharge', 18, '2018-10-22 23:40:54', 'Admin'),
+(3, 'Restaurant', 'ServiceCharge', 15, '2018-10-22 23:40:58', 'Admin'),
+(4, 'TAX', 'ServiceCharge', 5, '2018-10-28 20:02:07', 'Admin'),
+(5, 'Tax', 'Tax', 7, '2018-10-28 20:02:09', 'Admin'),
+(6, 'Restaurant', 'ServiceCharge', 12, '2018-10-28 20:02:12', 'Admin'),
+(7, 'Bar', 'ServiceCharge', 12, '2018-10-28 20:02:14', 'Admin');
+
 --
 -- Indexes for dumped tables
 --
@@ -443,6 +471,12 @@ ALTER TABLE `table_master`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `taxservices`
+--
+ALTER TABLE `taxservices`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -517,6 +551,12 @@ ALTER TABLE `room_type`
 --
 ALTER TABLE `table_master`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `taxservices`
+--
+ALTER TABLE `taxservices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
