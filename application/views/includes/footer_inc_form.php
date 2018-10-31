@@ -66,12 +66,12 @@
         <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
         <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datetimepicker/moment.min.js"></script>
         <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-
+        <script src="<?= base_url(); ?>assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
 
         <script>
             jQuery(function () {
                 // Init page helpers (Appear + CountTo plugins)
-                App.initHelpers(['datepicker', 'datetimepicker','appear', 'appear-countTo']);
+                App.initHelpers(['datepicker', 'datetimepicker','appear', 'appear-countTo','notify']);
             });
         </script>
                 <!-- Page JS Plugins -->

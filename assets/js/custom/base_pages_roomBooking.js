@@ -16,46 +16,19 @@ var BasePagesLogin = function() {
                 jQuery(e).closest('.help-block').remove();
             },
             rules: {
-                'empid': {
-                    required: true,
-                },
-                'name': {
-                    required: true
-                },
-                'role': {
-                    required: true
-                },
-                'department': {
-                    required: true
-                },
-                'Status': {
-                    required: true
-                },
-                'tp': {
-                    required: true,
-                    number:true
-                }                                                             
-            },
-            messages: {
-                'empid': {
-                    required: 'Please enter a Employee id'
-                },
-                'name': {
-                    required: 'Please enter a Employee Name'
-                },
-                'role': {
-                    required: 'Please select a Employee role'
-                },
-                'department': {
-                    required: 'Please select a department'
-                },
-                'Status': {
-                    required: 'Please select a Status'
-                },
-                'tp': {
-                    required: 'Please enter a Telepone number',
-                    number:'Telepone should contains number'
-                }    
+                'title':{ required:true},
+                'firstname':{ required:true},
+                'lastname':{ required:true},
+                'gender':{ required:true},
+                'address':{ required:true},
+                'city':{ required:true},
+                'mobile':{ required:true,number:true},
+                'nationality':{ required:true},
+                'identityType':{ required:true},
+                'identityNo':{ required:true},
+                'chkin_date ':{ required:true},
+                'chkout_date ':{ required:true},
+                'tariff ':{ required:true},
             }
         });
     };

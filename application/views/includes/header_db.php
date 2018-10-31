@@ -45,6 +45,7 @@
         <!-- END Stylesheets -->
     </head>
     <body>
+    <?php date_default_timezone_set("Asia/Colombo"); ?>
         <!-- Page Container -->
         <!--
             Available Classes:

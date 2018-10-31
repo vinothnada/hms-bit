@@ -41,8 +41,9 @@ class Frontoffice extends CI_Controller{
 
   }
 
-  public function guestInfo(){
-    
+  public function addNewBooking(){
+        var_dump($_POST);
   }
+
 
 }

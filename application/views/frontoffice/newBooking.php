@@ -14,8 +14,20 @@ foreach ($taxservicesdata as $items) {
 }
 ?>
 
+<?php 
+$currentDate = date("m/d/Y h:i:sa");
+$tomorrow = date("m/d/Y h:i:sa", time() + 86400);
+
+$diff = abs(strtotime($tomorrow) - strtotime($currentDate))/(60*60);
+
+echo "diff is".$diff;
+ ?>
+
 <!-- Main Container -->
 <main id="main-container">
+
+<!-- Hidden field for notificaton -->
+<button style="display: none;" id="chkinerror" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Check-In-Date should not greater than Check-Out-Date :)"></button>
 
 	<!-- Page Content -->
 	<div class="content">
@@ -39,8 +51,7 @@ foreach ($taxservicesdata as $items) {
                 </div>
             </div>
         </div>
-
-        <form class="js-validation-form form-horizontal" action="base_forms_validation.html" method="post">
+        <form class="js-validation-form form-horizontal" action="<?= site_url("frontoffice/addNewBooking"); ?>" method="post">
             <div class="row">
                 <div class="col-lg-6">
                     <!-- Bootstrap Forms Validation -->
@@ -50,11 +61,13 @@ foreach ($taxservicesdata as $items) {
                             <h3 class="block-title">Guest Information</h3>
                         </div>
                         <div class="block-content block-content-narrow">
+                        <input type="hidden" name="roomno" id="roomno" value="<?=$selectedroomno; ?>">
+                        <input type="hidden" name="bookingno" id="bookingno" value="<?=$bookinginfo[0]->booking_no + 1; ?>">
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="title">Title</label>
                                 <div class="col-md-7">
                                     <select class="form-control" id="title" name="title" style="width: 100%;" data-placeholder="Choose one..">
-                                        <option>Choose One..</option>
+                                        <option value="">Choose One..</option>
                                         <option value="Dr">Dr</option>
                                         <option value="Mr">Mr</option>
                                         <option value="Mrs">Mrs</option>
@@ -78,7 +91,7 @@ foreach ($taxservicesdata as $items) {
                                 <label class="col-md-4 control-label" for="identityType">Identity Type</label>
                                 <div class="col-md-7">
                                     <select class="form-control" id="identityType" name="identityType" style="width: 100%;" data-placeholder="Choose one..">
-                                        <option>Choose One..</option>
+                                        <option value="">Choose One..</option>
                                         <option value="Nic">NIC</option>
                                         <option value="DrivingLicense">Driving License</option>
                                         <option value="Passport">Passport</option>
@@ -95,7 +108,7 @@ foreach ($taxservicesdata as $items) {
                                 <label class="col-md-4 control-label" for="gender">Gender</label>
                                 <div class="col-md-7">
                                     <select class="form-control" id="gender" name="gender" style="width: 100%;" data-placeholder="Choose one..">
-                                        <option>Choose One..</option>
+                                        <option value="">Choose One..</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
@@ -108,7 +121,7 @@ foreach ($taxservicesdata as $items) {
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="city">Cit</label>
+                                <label class="col-md-4 control-label" for="city">City</label>
                                 <div class="col-md-7">
                                     <input class="form-control" type="text" id="city" name="city" placeholder="Enter City">
                                 </div>
@@ -138,10 +151,10 @@ foreach ($taxservicesdata as $items) {
                         </div>
                         <div class="block-content block-content-narrow">
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="example-datetimepicker3">Check-In-Date</label>
+                                <label class="col-md-4 control-label" for="chkin_date">Check-In-Date</label>
                                 <div class="col-md-7">
                                     <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                        <input class="form-control" type="text" id="example-datetimepicker3" name="chkin_date" placeholder="Choose a date..">
+                                        <input class="form-control" type="text" id="chkin_date" name="chkin_date" placeholder="Choose a date.." value="<?=$currentDate;?>">
                                         <span class="input-group-addon">
                                             <span class="fa fa-calendar"></span>
                                         </span>
@@ -149,10 +162,10 @@ foreach ($taxservicesdata as $items) {
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="example-datetimepicker3">Check-Out-Date</label>
+                                <label class="col-md-4 control-label" for="chkout_date">Check-Out-Date</label>
                                 <div class="col-md-7">
                                     <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                        <input class="form-control" type="text" id="example-datetimepicker3" name="chkout_date" placeholder="Choose a date..">
+                                        <input class="form-control" type="text" id="chkout_date" name="chkout_date" placeholder="Choose a date.." value="<?=$tomorrow;?>">
                                         <span class="input-group-addon">
                                             <span class="fa fa-calendar"></span>
                                         </span>
@@ -192,7 +205,31 @@ foreach ($taxservicesdata as $items) {
     </div>
 </main>
 
+
+
 <!-- Page JS Plugins -->
 <script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-<script src="<?= base_url(); ?>assets/js/custom/base_pages_roomBooking.js"></script>
+<!-- <script src="<?= base_url(); ?>assets/js/custom/base_pages_roomBooking.js"></script> -->
+
+<script>
+    
+$('#chkout_date').blur(function(){
+    var chkindate = $('#chkin_date').val();
+    var chkoutdate = $('#chkout_date').val();
+    var sessionPrice = ($('#tariff').val())/2;
+    var tax = "<?= $taxArray[0]; ?>";
+
+    if (chkoutdate < chkindate) {
+        $("#chkinerror").click();
+    }else{
+    var diff = (Date.parse(chkoutdate) - Date.parse(chkindate))/3600000/12;
+    $('#tariff').val(sessionPrice * diff) ;
+    $('#tariffwithtax').val((sessionPrice * diff) + (sessionPrice * diff * tax/100) ) ;        
+    }
+
+
+
+})
+
+</script>
