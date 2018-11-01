@@ -21,16 +21,17 @@ $tomorrow = date("m/d/Y h:i:sa", time() + 86400);
 $diff = abs(strtotime($tomorrow) - strtotime($currentDate))/(60*60);
 
 echo "diff is".$diff;
- ?>
+?>
 
 <!-- Main Container -->
 <main id="main-container">
 
-<!-- Hidden field for notificaton -->
-<button style="display: none;" id="chkinerror" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Check-In-Date should not greater than Check-Out-Date :)"></button>
+    <!-- Hidden field for notificaton -->
+    <button style="display: none;" id="chkinerror" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Check-In-Date should not greater than Check-Out-Date :)"></button>
+    <button style="display: none;" id="emptyError" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Please enter a keyword to search"></button>    
 
-	<!-- Page Content -->
-	<div class="content">
+    <!-- Page Content -->
+    <div class="content">
         <div class="content bg-white border-b">
             <div class="row items-push text-uppercase">
                 <div class="col-xs-6 col-sm-3">
@@ -51,6 +52,37 @@ echo "diff is".$diff;
                 </div>
             </div>
         </div>
+        <br>
+
+        <div class="content bg-white border-b">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="block">
+                        <div class="block-content block-content-narrow block-content-full">
+                                <div class="form-material form-material-primary input-group remove-margin-t remove-margin-b">
+                                    <input class="form-control" type="text" id="searchByIdText" placeholder="Search Guest By Identity Number..">
+                                    <span class="input-group-addon" id="searchById" ><i class="si si-magnifier"></i></span>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="block">
+                        <div class="block-content block-content-narrow block-content-full">
+                                <div class="form-material form-material-primary input-group remove-margin-t remove-margin-b">
+                                    <input class="form-control" type="text" id="searchByNameText" placeholder="Search Guest By Name..">
+                                    <span class="input-group-addon" id="searchByName"><i class="si si-magnifier"></i></span>
+                                </div>
+                        </div>
+                    </div>
+                </div>            
+            </div>    
+        </div>
+        <div id="searchDiv" style="display: none;">Loading</div>    
+
+
+
+
         <form class="js-validation-form form-horizontal" action="<?= site_url("frontoffice/addNewBooking"); ?>" method="post">
             <div class="row">
                 <div class="col-lg-6">
@@ -61,8 +93,8 @@ echo "diff is".$diff;
                             <h3 class="block-title">Guest Information</h3>
                         </div>
                         <div class="block-content block-content-narrow">
-                        <input type="hidden" name="roomno" id="roomno" value="<?=$selectedroomno; ?>">
-                        <input type="hidden" name="bookingno" id="bookingno" value="<?=$bookinginfo[0]->booking_no + 1; ?>">
+                            <input type="hidden" name="roomno" id="roomno" value="<?=$selectedroomno; ?>">
+                            <input type="hidden" name="bookingno" id="bookingno" value="<?=$bookinginfo[0]->booking_no + 1; ?>">
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="title">Title</label>
                                 <div class="col-md-7">
@@ -213,23 +245,73 @@ echo "diff is".$diff;
 <!-- <script src="<?= base_url(); ?>assets/js/custom/base_pages_roomBooking.js"></script> -->
 
 <script>
-    
-$('#chkout_date').blur(function(){
-    var chkindate = $('#chkin_date').val();
-    var chkoutdate = $('#chkout_date').val();
-    var sessionPrice = ($('#tariff').val())/2;
-    var tax = "<?= $taxArray[0]; ?>";
 
-    if (chkoutdate < chkindate) {
-        $("#chkinerror").click();
-    }else{
-    var diff = (Date.parse(chkoutdate) - Date.parse(chkindate))/3600000/12;
-    $('#tariff').val(sessionPrice * diff) ;
-    $('#tariffwithtax').val((sessionPrice * diff) + (sessionPrice * diff * tax/100) ) ;        
+// script to validate and assign checkin and checkout dates
+    $('#chkout_date').blur(function(){
+        var chkindate = $('#chkin_date').val();
+        var chkoutdate = $('#chkout_date').val();
+        var sessionPrice = "<?=$roomInfo[0]->tariff; ?>"/2;
+        var tax = "<?= $taxArray[0]; ?>";
+
+        if (chkoutdate < chkindate) {
+            $("#chkinerror").click();
+        }else{
+            var diff = (Date.parse(chkoutdate) - Date.parse(chkindate))/3600000/12;
+            $('#tariff').val(sessionPrice * diff) ;
+            $('#tariffwithtax').val((sessionPrice * diff) + (sessionPrice * diff * tax/100) ) ;        
+        }
+    })
+
+// Scripts to seach guests
+
+    $("#searchById").click(function(){
+        var searchText = $("#searchByIdText").val();
+
+        if (searchText == "" || searchText == null) {
+            $("#emptyError").click();
+        }else{
+        var url = "<?= site_url("frontoffice/searchByIdentity") ?>"
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: {searchText: searchText},
+            success: function(data){
+                $("#searchDiv").css("display","block")
+                $("#searchDiv").html(data);
+            }
+        });
     }
+    }); 
 
 
+    $("#searchByName").click(function(){
+        alert("hello");
+    }) 
 
-})
+</script>
 
+<script >
+  function getData(id){
+        var gId = id;
+        var url = "<?= site_url("frontoffice/searchGuestById") ?>";
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: {gId: gId},
+            dataType: 'json',
+            success: function(data){
+              // var result = json.parse(data);
+              $("#title").val(data[0]['title']);
+              $("#firstname").val(data[0]['firstname']);
+              $("#lastname").val(data[0]['lastname']);
+              $("#identityType").val(data[0]['identityType']);
+              $("#identityNo").val(data[0]['identityNo']);
+              $("#gender").val(data[0]['gender']);
+              $("#address").val(data[0]['address']);
+              $("#city").val(data[0]['city']);
+              $("#mobile").val(data[0]['mobile']);
+              $("#nationality").val(data[0]['nationality']);
+            }
+        });
+    }
 </script>

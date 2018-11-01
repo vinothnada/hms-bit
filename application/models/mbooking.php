@@ -8,6 +8,12 @@ class Mbooking extends CI_Model{
     	return $query->result();    	
     }
 
+    public function searchByIdentity($text){
+    	$this->db->like('identityNo', $text);
+		$query = $this->db->get('guests');
+		return $query->result();
+    }
+
 
 
 } 

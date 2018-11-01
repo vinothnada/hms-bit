@@ -41,6 +41,21 @@ class Frontoffice extends CI_Controller{
 
   }
 
+
+  public function searchByIdentity(){
+    $text = $_GET['searchText'];
+    $data["guestsdata"] = $this->mbooking->searchByIdentity($text);
+    $this->load->view('frontoffice/searchTable',$data);
+  }
+
+  public function searchGuestById(){
+    $id = $_GET['gId'];
+    $guestdata = $this->mcrud->getDataById('guests',$id,'id');
+    echo json_encode($guestdata);
+
+  }
+
+
   public function addNewBooking(){
         var_dump($_POST);
   }
