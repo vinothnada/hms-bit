@@ -55,10 +55,100 @@ class Frontoffice extends CI_Controller{
 
   }
 
+  public function searchByName(){
+    $text = $_GET['searchText'];
+    $data["guestsdata"] = $this->mbooking->searchByName($text);
+    $this->load->view('frontoffice/searchTable',$data);
+  }
+
 
   public function addNewBooking(){
-        var_dump($_POST);
-  }
+
+                  var_dump($this->input->post('chkin_date'));
+                  var_dump($this->input->post('chkout_date'));  
+                  echo '<br>';
+
+                  $dateTimeString = $this->input->post('chkin_date');
+
+                  $date = date($dateTimeString);
+
+                  echo $date;
+
+                  // $month = substr($dateTimeString, 0,2);
+                  // $date = substr($dateTimeString, 3,3);
+                  // $year = substr($dateTimeString, 5,8);
+                  // echo $month;
+                  // echo '<br>';
+                  // echo $date;
+                  // echo '<br>';
+                  // echo $year;
+
+
+     // $this->form_validation->set_rules('title','title','required');
+     // $this->form_validation->set_rules('firstname','firstname','required');
+     // $this->form_validation->set_rules('lastname','lastname','required');
+     // $this->form_validation->set_rules('identityType','identityType','required');
+     // $this->form_validation->set_rules('identityNo','identityNo','required');
+     // $this->form_validation->set_rules('gender','gender','required');
+     // $this->form_validation->set_rules('address','address','required');
+     // $this->form_validation->set_rules('city','city','required');
+     // $this->form_validation->set_rules('mobile','mobile','required');
+     // $this->form_validation->set_rules('nationality','nationality','required');
+     // $this->form_validation->set_rules('chkin_date','chkin_date','required');
+     // $this->form_validation->set_rules('chkout_date','chkout_date','required');
+     // $this->form_validation->set_rules('tariff','tariff','required');
+     // $this->form_validation->set_rules('tax','tax','required');
+     // $this->form_validation->set_rules('tariffwithtax','tariffwithtax','required');
+
+     //  $guestData = array(
+     //      'title'=>$this->input->post('title'),
+     //      'firstname'=>$this->input->post('firstname'),
+     //      'lastname'=>$this->input->post('lastname'),
+     //      'identityType'=>$this->input->post('identityType'),
+     //      'identityNo'=>$this->input->post('identityNo'),
+     //      'gender'=>$this->input->post('gender'),
+     //      'address'=>$this->input->post('address'),
+     //      'city'=>$this->input->post('city'),
+     //      'mobile'=>$this->input->post('mobile'),
+     //      'nationality'=>$this->input->post('nationality')
+     //  );    
+      
+     //  $currentGuestId = $this->input->post('currentGuest') ;
+
+     //   if ($this->form_validation->run() == FALSE) {
+     //    $this->session->set_userdata('error', ' Booking failed!');
+     //    redirect("frontoffice/newBooking?id=".$this->input->post('roomno'));
+     //  } else {
+     //      if ($currentGuestId == "null") {
+     //        $currentGuestId = $this->mcrud->addDataByForm('guests',$guestData);
+     //      }
+     //          $bookingData = array(
+     //              'booking_no'=>$this->input->post('bookingno'),
+     //              'room_no'=>$this->input->post('roomno'),
+     //              'guest_id'=>$currentGuestId,
+     //              'chkin_date'=>$this->input->post('chkin_date'),
+     //              'chkout_date'=>$this->input->post('chkout_date'),
+     //              'modified_By'=>$this->input->post('modified_By')
+     //          );
+
+     //        $bookingId = $this->mcrud->addDataByForm('booking_room',$bookingData);
+
+     //          $roomData = array(
+     //              'availibility'=>"Occupied",
+     //          );
+
+     //        $updatedRoom = $this->mcrud->updateDataByForm('room_master',$roomData,array('roomno' => $this->input->post('roomno')));
+
+     //    $this->session->set_userdata('success', ' Booking has been created succesfully!');
+     //    redirect("frontoffice/newBooking?id=".$this->input->post('roomno'));
+     //  }  
+
+ }
+
+     private function convertDateFromPucker($dateTimeString){
+
+        $d = split("/", $dateTimeString);
+     }
 
 
 }

@@ -20,7 +20,9 @@ $tomorrow = date("m/d/Y h:i:sa", time() + 86400);
 
 $diff = abs(strtotime($tomorrow) - strtotime($currentDate))/(60*60);
 
-echo "diff is".$diff;
+$logged_user = $this->session->userdata('logged_user');
+
+
 ?>
 
 <!-- Main Container -->
@@ -30,26 +32,43 @@ echo "diff is".$diff;
     <button style="display: none;" id="chkinerror" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Check-In-Date should not greater than Check-Out-Date :)"></button>
     <button style="display: none;" id="emptyError" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Please enter a keyword to search"></button>    
 
+
     <!-- Page Content -->
     <div class="content">
         <div class="content bg-white border-b">
+
+        <?php if ($this->session->userdata('error')) { ?>       
+        <div class="alert alert-danger"><strong>Error!</strong> <?php echo $this->session->userdata('error'); ?> </div>
+        <?php $this->session->unset_userdata('error');
+        }
+        ?>
+        <?php if ($this->session->userdata('success')) { ?>      
+        <div class="alert alert-success"><strong>Success!</strong> <?php echo $this->session->userdata('success'); ?> </div>
+        <?php $this->session->unset_userdata('success');
+    } 
+    ?>          
             <div class="row items-push text-uppercase">
-                <div class="col-xs-6 col-sm-3">
+                <div class="col-xs-2">
                     <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Booking No</small></div>
                     <a class="h3 font-w300 text-primary animated flipInX">BR<?=$bookinginfo[0]->booking_no + 1; ?></a>
                 </div>
-                <div class="col-xs-6 col-sm-3">
-                    <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Room Type</small></div>
-                    <a class="h3 font-w300 text-primary animated flipInX"><?=$roomInfo[0]->type; ?></a>
+                <div class="col-xs-2">
+                    <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Room Number</small></div>
+                    <a class="h3 font-w300 text-primary animated flipInX">R#<?=$selectedroomno; ?></a>
                 </div>
-                <div class="col-xs-6 col-sm-3">
+                <div class="col-xs-2">
                     <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Price</small></div>
                     <a class="h3 font-w300 text-primary animated flipInX">LKR <?=$roomInfo[0]->tariff; ?></a>
                 </div>
-                <div class="col-xs-6 col-sm-3">
+                <div class="col-xs-3">
+                    <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Room Type</small></div>
+                    <a class="h3 font-w300 text-primary animated flipInX"><?=$roomInfo[0]->type; ?></a>
+                </div>                
+                <div class="col-xs-2">
                     <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Status</small></div>
                     <a class="h3 font-w300 text-primary animated flipInX"><?=$roomInfo[0]->availibility; ?></a>
-                </div>
+                </div>                
+
             </div>
         </div>
         <br>
@@ -80,9 +99,6 @@ echo "diff is".$diff;
         </div>
         <div id="searchDiv" style="display: none;">Loading</div>    
 
-
-
-
         <form class="js-validation-form form-horizontal" action="<?= site_url("frontoffice/addNewBooking"); ?>" method="post">
             <div class="row">
                 <div class="col-lg-6">
@@ -95,6 +111,8 @@ echo "diff is".$diff;
                         <div class="block-content block-content-narrow">
                             <input type="hidden" name="roomno" id="roomno" value="<?=$selectedroomno; ?>">
                             <input type="hidden" name="bookingno" id="bookingno" value="<?=$bookinginfo[0]->booking_no + 1; ?>">
+                            <input type="hidden" name="currentGuest" id="currentGuest" value="null">
+                            <input type="hidden" name="modified_By" id="modified_By" value="<?=$logged_user;?>">
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="title">Title</label>
                                 <div class="col-md-7">
@@ -186,7 +204,7 @@ echo "diff is".$diff;
                                 <label class="col-md-4 control-label" for="chkin_date">Check-In-Date</label>
                                 <div class="col-md-7">
                                     <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                        <input class="form-control" type="text" id="chkin_date" name="chkin_date" placeholder="Choose a date.." value="<?=$currentDate;?>">
+                                        <input class="form-control" type="text" id="chkin_date" name="chkin_date" placeholder="Choose a date.." value="<?=$currentDate;?>" readonly>
                                         <span class="input-group-addon">
                                             <span class="fa fa-calendar"></span>
                                         </span>
@@ -247,20 +265,23 @@ echo "diff is".$diff;
 <script>
 
 // script to validate and assign checkin and checkout dates
-    $('#chkout_date').blur(function(){
-        var chkindate = $('#chkin_date').val();
-        var chkoutdate = $('#chkout_date').val();
-        var sessionPrice = "<?=$roomInfo[0]->tariff; ?>"/2;
-        var tax = "<?= $taxArray[0]; ?>";
+$('#chkout_date').blur(function(){
+    var chkindate = $('#chkin_date').val();
+    var chkoutdate = $('#chkout_date').val();
+    var sessionPrice = "<?=$roomInfo[0]->tariff; ?>";
+    var tax = "<?= $taxArray[0]; ?>";
+    var different = (Date.parse(chkoutdate) - Date.parse(chkindate))/3600000/24;
 
-        if (chkoutdate < chkindate) {
-            $("#chkinerror").click();
-        }else{
-            var diff = (Date.parse(chkoutdate) - Date.parse(chkindate))/3600000/12;
-            $('#tariff').val(sessionPrice * diff) ;
-            $('#tariffwithtax').val((sessionPrice * diff) + (sessionPrice * diff * tax/100) ) ;        
-        }
-    })
+    if (chkoutdate < chkindate) {
+        $("#chkinerror").click();
+    }else if (different<1) {
+        $('#tariff').val(sessionPrice) ;
+        $('#tariffwithtax').val((sessionPrice) + (sessionPrice * tax/100) ) ;  
+    }else{            
+        $('#tariff').val(sessionPrice * different) ;
+        $('#tariffwithtax').val((sessionPrice * different) + (sessionPrice * different * tax/100) ) ;        
+    }
+})
 
 // Scripts to seach guests
 
@@ -285,7 +306,22 @@ echo "diff is".$diff;
 
 
     $("#searchByName").click(function(){
-        alert("hello");
+        var searchText = $("#searchByNameText").val();
+
+        if (searchText == "" || searchText == null) {
+            $("#emptyError").click();
+        }else{
+        var url = "<?= site_url("frontoffice/searchByName") ?>"
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: {searchText: searchText},
+            success: function(data){
+                $("#searchDiv").css("display","block")
+                $("#searchDiv").html(data);
+            }
+        });
+    }
     }) 
 
 </script>
@@ -311,7 +347,30 @@ echo "diff is".$diff;
               $("#city").val(data[0]['city']);
               $("#mobile").val(data[0]['mobile']);
               $("#nationality").val(data[0]['nationality']);
+              $("#currentGuest").val(data[0]['id']);
             }
         });
     }
+</script>
+
+
+<script type="text/javascript">
+    
+        function convertToUtc(str) {
+        var date = new Date(str);
+        var year = date.getUTCFullYear();
+        var month = date.getUTCMonth()+1;
+        var dd = dategetUTCDate();
+        var hh = date.getUTCHours(); 
+        var mi = date.getUTCMinutes();
+        var sec = date.getUTCSeconds();
+
+        // 2010-11-12T13:14:15Z
+
+        theDate = year + "-" + (month [1] ? month : "0" + month [0]) + "-" + 
+                  (dd[1] ? dd : "0" + dd[0]);
+       theTime = (hh[1] ? hh : "0" + hh[0]) + ":" + (mi[1] ? mi : "0" + mi[0]);
+        return [ theDate, theTime ].join("T");
+     }
+     
 </script>
