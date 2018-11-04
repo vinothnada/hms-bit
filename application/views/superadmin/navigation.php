@@ -137,7 +137,7 @@
                                     <a href="<?=site_url('frontoffice/home');?>">Home</a>
                                 </li>
                                 <li>
-                                    <a href="<?=site_url('frontoffice/newBooking');?>">Booking</a>
+                                    <a href="<?=site_url('frontoffice/advanceBooking');?>">Advance Booking</a>
                                 </li>  
                                 <li>
                                     <a href="<?=site_url('Guests');?>">Guests</a>

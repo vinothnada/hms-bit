@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2018 at 01:41 AM
+-- Generation Time: Oct 29, 2018 at 03:07 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -144,7 +144,7 @@ CREATE TABLE `guests` (
   `city` varchar(100) DEFAULT NULL,
   `mobile` int(50) DEFAULT NULL,
   `nationality` varchar(50) DEFAULT NULL,
-  `identityType` varchar(50) DEFAULT NULL,
+  `identityType` float DEFAULT NULL,
   `identityNo` varchar(50) DEFAULT NULL,
   `dob` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -154,8 +154,7 @@ CREATE TABLE `guests` (
 --
 
 INSERT INTO `guests` (`id`, `title`, `firstname`, `lastname`, `gender`, `address`, `city`, `mobile`, `nationality`, `identityType`, `identityNo`, `dob`) VALUES
-(1, 'Mr', 'Ram', 'Gopal', 'Male', '16', 'Colombo', 13456, 'Srilankan', 'Nic', '902900085V', '2018-10-19'),
-(2, 'Mr', 'sam', 'asa', 'Female', '23', 'Col', 456, 'Maldices', 'Nic', '185690', '2018-10-29');
+(1, 'Mr', 'Ram', 'Gopal', 'Male', '16', 'Colombo', 13456, 'Srilankan', 0, '902900085V', '2018-10-19');
 
 -- --------------------------------------------------------
 
@@ -503,7 +502,7 @@ ALTER TABLE `floor_type`
 -- AUTO_INCREMENT for table `guests`
 --
 ALTER TABLE `guests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `hotel_info`

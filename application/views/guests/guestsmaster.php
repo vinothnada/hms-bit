@@ -29,9 +29,6 @@
 <!-- room List -->
 <div class="block">
 	<div class="block-header">
-		<div class="block-options">
-          <button class="	btn btn-primary" data-toggle="modal" data-target="#modal-popin-addNewMenu"><i class="glyphicon-plus"></i>&nbsp;Add new</button>
-      </div>
   </div>
   <div class="block-content">
       <table class="table table-bordered table-striped js-dataTable-full js-table-section">
@@ -59,9 +56,9 @@
 
   <td class="text-center">
       <div class="btn-group">
-        <a href="<?= site_url("units/editMenuMaster?id=$items->id") ?>">                        
+        <a href="<?= site_url("guests/editGuesData?id=$items->id") ?>">                        
            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil"></i></button></a>
-           <a href="<?= site_url("units/deleteMenuMaster?id=$items->id") ?>">                            
+           <a href="<?= site_url("guests/deleteGuestData?id=$items->id") ?>">                            
                <button class="btn btn-xs btn-default" type="button" onClick="return confirm('Are You Sure to Delete?')" data-toggle="tooltip" title="Remove" ><i class="fa fa-times"></i></button></a>
            </div>
        </td>
@@ -75,93 +72,6 @@
 </div>
 <!-- END Page Content -->
 </main>
-
-
-<!-- Pop In Modal - room types -->
-<div class="modal fade" id="modal-popin-addNewMenu" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-popin">
-        <div class="modal-content">
-            <div class="block block-themed block-transparent remove-margin-b">
-                <div class="block-header bg-primary-dark">
-                    <ul class="block-options">
-                        <li>
-                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                        </li>
-                    </ul>
-                    <h3 class="block-title">Add New Menu Item</h3>
-                </div>
-                <div class="block-content">
-                    <form class="js-validation-form form-horizontal push-10-t push-10"
-                    action="<?=site_url("units/addMenuItem")?>" method="post">
-                  <div class="form-group">
-                      <div class="col-xs-6">
-                          <div class="form-material">
-                              <input class="form-control" type="text" id="itemname"
-                                     name="itemname" placeholder="Please fill itemname">
-                              <label for="itemname">Item Name</label>
-                          </div>
-                      </div>
-                      <div class="col-xs-6">
-                          <div class="form-material">
-                              <input class="form-control" type="text" id="rate"
-                                     name="rate" placeholder="Please fill rate">
-                              <label for="rate">Rate</label>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <div class="col-xs-6">
-                          <div class="form-material">
-                              <select class="form-control" id="itemcat"
-                                      name="itemcat">
-                                  <option value="">Please Select</option>
-                              <?php foreach ($menucategoryActive as $list) { ?>
-                                  <option value="<?= $list->id?>"><?= $list->name?></option>
-                              <?php }?>
-                              </select> <label for="itemcat">Category</label>
-                          </div>
-                      </div>
-                      <div class="col-xs-6">
-                          <div class="form-material">
-                              <select class="form-control" id="itemunit"
-                                      name="itemunit">
-                                  <option value="">Please Select</option>
-                              <?php foreach ($menuunitActive as $list) { ?>
-                                  <option value="<?= $list->id?>"><?= $list->name?></option>
-                              <?php }?>
-                              </select> <label for="itemunit">Unit</label>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                        <div class="col-xs-6">
-                            <div class="form-material">
-                                <select class="form-control" id="status"
-                                        name="status">
-                                    <option value="">Please Select</option>
-                                    <option value="Active">Active</option>
-                                    <option value="Blocked">Blocked</option>
-                                </select> <label for="Status">Status</label>
-                            </div>
-                        </div>
-                  </div>                                                        
-                </div>
-                <div class="modal-footer">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <button class="btn btn-sm btn-primary" type="submit">
-                                <i class="fa fa-plus push-5-r"></i> Create
-                            </button>
-                        </div>
-                    </div>
-                </div>                              
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-<!-- END Pop In Modal -->
 
 
 <!-- Page JS Plugins -->

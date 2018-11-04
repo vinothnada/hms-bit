@@ -260,7 +260,7 @@ $logged_user = $this->session->userdata('logged_user');
 <!-- Page JS Plugins -->
 <script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
 <script src="<?= base_url(); ?>assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-<!-- <script src="<?= base_url(); ?>assets/js/custom/base_pages_roomBooking.js"></script> -->
+<script src="<?= base_url(); ?>assets/js/custom/base_pages_roomBooking.js"></script>
 
 <script>
 
