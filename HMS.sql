@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2018 at 03:07 AM
+-- Generation Time: Nov 05, 2018 at 01:48 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -25,6 +25,36 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `advance_booking_room`
+--
+
+CREATE TABLE `advance_booking_room` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL,
+  `roomno` int(11) NOT NULL,
+  `added_by` varchar(50) NOT NULL,
+  `added_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status` enum('Active','Cancelled','Linked') NOT NULL DEFAULT 'Active'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `advance_booking_room`
+--
+
+INSERT INTO `advance_booking_room` (`id`, `name`, `start`, `end`, `roomno`, `added_by`, `added_date`, `status`) VALUES
+(10, 'AB1', '2018-11-01 00:00:00', '2018-11-03 00:00:00', 6, 'vicky nada', '2018-11-04 10:50:05', 'Active'),
+(11, 'Ab2', '2018-11-03 00:00:00', '2018-11-05 00:00:00', 3, 'vicky nada', '2018-11-04 10:50:13', 'Active'),
+(12, 'Ab3', '2018-11-01 00:00:00', '2018-11-06 00:00:00', 1, 'vicky nada', '2018-11-04 10:50:18', 'Active'),
+(13, 'Ab4', '2018-11-05 00:00:00', '2018-11-10 00:00:00', 5, 'vicky nada', '2018-11-04 16:40:16', 'Cancelled'),
+(14, 'Ac3', '2018-11-06 00:00:00', '2018-11-07 00:00:00', 3, 'vicky nada', '2018-11-04 17:06:16', 'Active'),
+(15, 'pudd', '2018-11-08 00:00:00', '2018-11-09 00:00:00', 6, 'vicky nada', '2018-11-04 17:24:31', 'Cancelled'),
+(16, 'asd', '2018-11-06 00:00:00', '2018-11-08 00:00:00', 2, 'vicky nada', '2018-11-04 18:13:23', 'Active');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `booking_room`
 --
 
@@ -36,15 +66,17 @@ CREATE TABLE `booking_room` (
   `chkin_date` datetime DEFAULT NULL,
   `chkout_date` datetime DEFAULT NULL,
   `modified_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `mofified_By` varchar(50) DEFAULT NULL
+  `modified_By` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `booking_room`
 --
 
-INSERT INTO `booking_room` (`id`, `booking_no`, `room_no`, `guest_id`, `chkin_date`, `chkout_date`, `modified_date`, `mofified_By`) VALUES
-(0, 1, 2, 1, '2018-10-21 18:47:37', '2018-10-22 18:47:39', '2018-10-21 18:51:54', 'Vicky Nada');
+INSERT INTO `booking_room` (`id`, `booking_no`, `room_no`, `guest_id`, `chkin_date`, `chkout_date`, `modified_date`, `modified_By`) VALUES
+(1, 1, 2, 1, '2018-10-29 14:00:00', '2018-10-30 18:47:39', '2018-11-04 09:42:10', 'Vicky Nada'),
+(2, 2, 3, 1, '2018-10-27 14:00:00', '2018-10-28 14:00:00', '2018-11-04 09:42:36', 'vicky nada'),
+(3, 3, 4, 4, '2018-10-25 22:13:00', '2018-10-26 19:20:00', '2018-11-04 09:43:13', 'vicky nada');
 
 -- --------------------------------------------------------
 
@@ -144,17 +176,18 @@ CREATE TABLE `guests` (
   `city` varchar(100) DEFAULT NULL,
   `mobile` int(50) DEFAULT NULL,
   `nationality` varchar(50) DEFAULT NULL,
-  `identityType` float DEFAULT NULL,
+  `identityType` varchar(50) DEFAULT NULL,
   `identityNo` varchar(50) DEFAULT NULL,
-  `dob` date DEFAULT NULL
+  `status` enum('Active','Blocked') DEFAULT 'Active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `guests`
 --
 
-INSERT INTO `guests` (`id`, `title`, `firstname`, `lastname`, `gender`, `address`, `city`, `mobile`, `nationality`, `identityType`, `identityNo`, `dob`) VALUES
-(1, 'Mr', 'Ram', 'Gopal', 'Male', '16', 'Colombo', 13456, 'Srilankan', 0, '902900085V', '2018-10-19');
+INSERT INTO `guests` (`id`, `title`, `firstname`, `lastname`, `gender`, `address`, `city`, `mobile`, `nationality`, `identityType`, `identityNo`, `status`) VALUES
+(1, 'Mr', 'Ram', 'Gopal', 'Male', '30', 'Colombo', 25658, 'Srilankan', 'Nic', '902900085V', 'Active'),
+(4, 'Mr', 'Chandra', 'Mouli', 'Male', '36,Malay Street', 'Colombo-2', 776546789, 'Sri Lankan', 'Nic', '897678765V', 'Active');
 
 -- --------------------------------------------------------
 
@@ -297,10 +330,12 @@ CREATE TABLE `room_master` (
 
 INSERT INTO `room_master` (`id`, `roomno`, `roomtype`, `floortype`, `toilet`, `availibility`) VALUES
 (1, 1, 3, 3, 'English', 'Available'),
-(2, 2, 1, 1, 'English', 'Available'),
-(3, 3, 2, 2, 'English', 'Available'),
-(4, 4, 2, 2, 'English', 'Occupied'),
-(5, 5, 4, 4, 'English', 'Available');
+(2, 2, 1, 1, 'English', 'Occupied'),
+(3, 3, 2, 2, 'English', 'Occupied'),
+(4, 4, 2, 2, 'English', 'Available'),
+(5, 5, 4, 4, 'English', 'Maintanance'),
+(6, 6, 1, 1, 'English', 'Available'),
+(7, 7, 1, 2, 'English', 'Maintanance');
 
 -- --------------------------------------------------------
 
@@ -383,12 +418,19 @@ INSERT INTO `taxservices` (`id`, `name`, `type`, `value`, `modifiedDate`, `modif
 --
 
 --
+-- Indexes for table `advance_booking_room`
+--
+ALTER TABLE `advance_booking_room`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `booking_room`
 --
 ALTER TABLE `booking_room`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `guest_id` (`guest_id`),
   ADD KEY `room_id` (`room_no`),
-  ADD KEY `mofified_By` (`mofified_By`);
+  ADD KEY `mofified_By` (`modified_By`);
 
 --
 -- Indexes for table `departments`
@@ -481,6 +523,18 @@ ALTER TABLE `taxservices`
 --
 
 --
+-- AUTO_INCREMENT for table `advance_booking_room`
+--
+ALTER TABLE `advance_booking_room`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `booking_room`
+--
+ALTER TABLE `booking_room`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
@@ -502,7 +556,7 @@ ALTER TABLE `floor_type`
 -- AUTO_INCREMENT for table `guests`
 --
 ALTER TABLE `guests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `hotel_info`
@@ -538,7 +592,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `room_master`
 --
 ALTER TABLE `room_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `room_type`
@@ -568,7 +622,7 @@ ALTER TABLE `taxservices`
 ALTER TABLE `booking_room`
   ADD CONSTRAINT `booking_room_ibfk_1` FOREIGN KEY (`guest_id`) REFERENCES `guests` (`id`),
   ADD CONSTRAINT `booking_room_ibfk_2` FOREIGN KEY (`room_no`) REFERENCES `room_master` (`roomno`),
-  ADD CONSTRAINT `booking_room_ibfk_3` FOREIGN KEY (`mofified_By`) REFERENCES `employee` (`name`);
+  ADD CONSTRAINT `booking_room_ibfk_3` FOREIGN KEY (`modified_By`) REFERENCES `employee` (`name`);
 
 --
 -- Constraints for table `employee`

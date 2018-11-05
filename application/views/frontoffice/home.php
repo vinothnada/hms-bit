@@ -16,6 +16,11 @@
 		</div>
 	</div>
 	<!-- END Page Header -->
+    
+	<!-- Notifications -->
+    <button style="display: none;" id="maintananceerror" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Sorry,This room is under Maintanance"></button>
+    <button style="display: none;" id="cleaningerror" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Sorry,This room is under a Housekeeping Activity"></button> 
+
 
 	<!-- Page Content -->
 	<div class="content">
@@ -121,14 +126,6 @@
 			</div>																		
 		</div>
 
-
-		<?php foreach ($roomsdata as $item) {
-			echo $item->name;
-			echo $item->type;
-			echo $item->roomno;
-			echo $item->availibility;
-		} ?>
-
 		<?php foreach ($floortypes as $item) { ?>
 		<div class="row">			
 			<div class="col-sm-12">
@@ -146,20 +143,28 @@
 							<?php foreach ($roomsdata as $item2) { ?>
 							<?php if ($item2->name == $item->name) { ?>
 							<div class="col-sm-2">
-								<a class="block block-link-hover1 text-center" href="<?= site_url("frontoffice/newBooking?id=$item2->roomno") ?>">
-									<div class="block-content border block-content-full block-content-mini">
-										<strong>Room#<?=$item2->roomno;?></strong> 
-									</div>
 									<?php $classstring = "block-content block-content-full bg-"; ?>
 									<?php if ($item2->availibility == "Available") {
 										$classstring .= "success";
+										$linkUrl = site_url("frontoffice/newBooking?id=$item2->roomno");
+										$rid="availableRoom";
 									}elseif ($item2->availibility == "Occupied") {
+										$classstring .= "primary";
+										$linkUrl = site_url("frontoffice/occupiedRoom?id=$item2->roomno");
+										$rid="occupiedRoom";										
+									}elseif ($item2->availibility == "Maintanance") {
 										$classstring .= "danger";
-									}elseif ($item2->availibility == "Maintenance") {
-										$classstring .= "Warning";
+										$linkUrl = "#";
+										$rid="maintananceRoom";										
 									}elseif ($item2->availibility == "Housekeeping") {
 										$classstring .= "info";
+										$linkUrl = "#";
+										$rid="cleaningRoom";										
 									} ?>                            
+								<a class="block block-link-hover1 text-center" id="<?=$rid?>" href="<?= $linkUrl; ?>">
+									<div class="block-content border block-content-full block-content-mini" >
+										<strong>Room#<?=$item2->roomno;?></strong> 
+									</div>
 									<div class="<?= $classstring;?>">
 										<i class="fa fa-hotel fa-4x text-white"></i>
 									</div>
@@ -179,3 +184,15 @@
 		<?php } ?>
 	</div>
 </main>
+<script >
+	
+	$("#maintananceRoom").click(function(){
+		$("#maintananceerror").click()
+	})
+
+	$("#cleaningRoom").click(function(){
+		$("#cleaningerror").click()
+	})
+
+		
+</script>

@@ -97,8 +97,52 @@ $logged_user = $this->session->userdata('logged_user');
                 </div>            
             </div>    
         </div>
-        <div id="searchDiv" style="display: none;">Loading</div>    
+        <div id="searchDiv" style="display: none;">Loading</div>
+        <br><br>
 
+<div class="row">
+        <div class="col-xs-12">
+            <div class="block" style="height: 350px;overflow-y: scroll">
+                <div class="block-header">  
+                    <h3 class="block-title">Advance Booking information of Room Number <strong><?=$selectedroomno;?></strong></h3>
+                </div>        
+                <div class="block-content">
+                                    <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">                
+                  <?php if (count($adbookall) > 0) { ?>
+                  <table class="table table-bordered table-striped js-dataTable-full js-table-section">
+                   <thead>
+                      <tr>
+                         <th class="hidden-xs" >Name/Contact</th>                  
+                         <th class="hidden-xs" >Start date</th>
+                         <th class="hidden-xs" >end date</th>
+                         <th class="hidden-xs" >Status</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                   <?php foreach ($adbookall as $items) { ?>
+                   <?php if ($items->roomno == $selectedroomno) { ?>
+                   <tr>
+                     <td class="hidden-xs"><?=$items->name;?></td>
+                     <td class="hidden-xs"><?= substr($items->start, 0,10);?></td>
+                     <td class="hidden-xs"><?= substr($items->end, 0,10);?></td>
+                     <?php if ($items->status == 'Active') { ?>
+                     <td class="hidden-xs"><span  class="label label-success"><?=$items->status;?></span></td>
+                     <?php }else{ ?>
+                     <td class="hidden-xs"><span  class="label label-warning"><?=$items->status;?></span></td>
+                     <?php } ?>
+                 </tr>
+                   <?php } ?>
+                 <?php } ?>
+             </tbody>
+         </table>
+         <?php }else{ ?>
+         <h5 style="text-align: center"><span class="text-info">No Advance Booking records Found</span></h5><br>
+         <?php } ?>
+         </div>
+     </div>
+    </div>
+    </div>              
+</div>
         <form class="js-validation-form form-horizontal" action="<?= site_url("frontoffice/addNewBooking"); ?>" method="post">
             <div class="row">
                 <div class="col-lg-6">
@@ -242,6 +286,14 @@ $logged_user = $this->session->userdata('logged_user');
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-md-4 control-label" for="tariffwithtax">Link With Advance Booking</label>
+                                <div class="col-md-7">
+                                <label class="css-input switch switch-sm switch-primary">
+                                    <input type="checkbox" id="checkLinkedAd"><span></span>
+                                </label>                                    
+                                </div>
+                            </div>                      
+                            <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
                                     <button class="btn btn-sm btn-primary" type="submit">Save Booking</button>
                                 </div>
@@ -373,4 +425,15 @@ $('#chkout_date').blur(function(){
         return [ theDate, theTime ].join("T");
      }
      
+</script>
+
+<script>
+
+$("#checkLinkedAd").change(function () {
+    if (this.checked) {
+        alert("Thanks for checking me");
+    }
+});
+
+ 
 </script>

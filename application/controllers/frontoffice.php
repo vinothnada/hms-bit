@@ -17,6 +17,7 @@ class Frontoffice extends CI_Controller{
     $data['floortypes'] = $this->mcrud->getAllDataAsc('floor_type','id');
 
     $this->load->view('includes/header_db');
+
     $this->load->view('superadmin/navigation');
     $this->load->view('frontoffice/home',$data);
     $this->load->view('includes/footer_inc_form');     
@@ -33,6 +34,9 @@ class Frontoffice extends CI_Controller{
     $data['roomInfo']  = $this->mbooking->getRoomInfo($_GET['id']);
     $data['bookinginfo']  = $this->mcrud->getAllDataDesc('booking_room','booking_no');
     $data["taxservicesdata"] = $this->mcrud->getAllDataDesc('taxservices','modifiedDate');
+    $data['adbook']  = $this->mcrud->getAllDataAscStatusActive('advance_booking_room','id');
+    $data['adbookall']  = $this->mcrud->getAllDataDesc('advance_booking_room','start');
+
 
     $this->load->view('includes/header_db');
     $this->load->view('superadmin/navigation');
@@ -152,17 +156,14 @@ class Frontoffice extends CI_Controller{
     }
 
     public function createAdvanceBooking(){
-
       $data = array(
         'name'=>$_POST['name'],
         'start'=>$_POST['start'],
         'end'=>$_POST['end'],
         'roomno'=>$_POST['roomno'],
         'added_by'=>$_POST['added_by'],
-        );    
-      
+        );
       $result = $this->mcrud->addDataByForm('advance_booking_room',$data);
-
       if ($result) {
         echo 1;
       }else{
@@ -170,21 +171,21 @@ class Frontoffice extends CI_Controller{
       }
     }
 
-
     public function deleteAdvanceBooking(){
       $id = $_GET['id'];
-
       $data = array(
         'status'=>'Cancelled',
         );
-
       $result = $this->mcrud->updateDataByForm('advance_booking_room',$data,array('id' => $id));
-      
       if ($result) {
         echo 1;
       }else{
         echo 0;
       }
+    }
+
+    public function occupiedRoom(){
+        echo "hello";      
     }
 
 
