@@ -1,4 +1,4 @@
-<?php
+  <?php
 
 class Frontoffice extends CI_Controller{
 
@@ -144,6 +144,7 @@ class Frontoffice extends CI_Controller{
       $data['bookinginfo']  = $this->mcrud->getAllDataDesc('booking_room','booking_no');
       $data['roomsInfo']  = $this->mcrud->getAllDataDesc('room_master','id');
       $data['adbook']  = $this->mcrud->getAllDataAscStatusActive('advance_booking_room','id');
+      $data['adbookExpired']  = $this->mbooking->getExpiredAdbs();
       $data['roommaster'] = $this->msadmin->getRoomMasterData();
       $data['roomtypes'] = $this->mcrud->getAllDataAscStatusActive('room_type','id');
 
@@ -184,9 +185,42 @@ class Frontoffice extends CI_Controller{
       }
     }
 
-    public function occupiedRoom(){
-        echo "hello";      
+
+    public function setAdbExpiration(){
+
+      $dateFor = $_GET["today"];
+      $result = $this->mbooking->setAdbExpiration($dateFor);
+      if ($result) {
+        echo 1;
+      }else{
+        echo 0;
+      }
     }
+
+    public function occupiedRoom(){
+
+    $data['selectedroomno'] = 0 ;
+
+    if (isset($_GET['id'])) {
+      $data['selectedroomno'] = $_GET['id'];
+    }
+
+    $data['roomInfo']  = $this->mbooking->getRoomInfo($_GET['id']);
+    $data['bookinginfo']  = $this->mcrud->getDataById('booking_room',$_GET['id'],'room_no');
+    $data["taxservicesdata"] = $this->mcrud->getAllDataDesc('taxservices','modifiedDate');
+
+var_dump($data['bookinginfo']);
+    
+
+    $this->load->view('includes/header_db');
+    $this->load->view('superadmin/navigation');
+    $this->load->view('frontoffice/occupiedRoom',$data);
+    $this->load->view('includes/footer_inc_form');
+    
+    }
+
+
+
 
 
 }

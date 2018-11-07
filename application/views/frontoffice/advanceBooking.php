@@ -51,7 +51,7 @@ foreach ($roomtypes as $item) {
     foreach ($roommaster as $key) {
         if ($item->type == $key->type) {
             $master[$i]['children'][$j]['id'] = "R". $key->roomno;
-            $master[$i]['children'][$j]['name'] = $key->roomno;
+            $master[$i]['children'][$j]['name'] = 'Room '.$key->roomno;
         $j = $j+1;
         }
     }
@@ -103,9 +103,21 @@ foreach ($bookinginfo as $item) {
     $i = $i+1;
 }
 
+foreach ($adbookExpired as $item) {
+    $bookingsmaster[$i]['start'] = $item->start;
+    $bookingsmaster[$i]['end'] = $item->end;
+    $bookingsmaster[$i]['id'] = "exp".$item->id;
+    $bookingsmaster[$i]['resource'] = "R".$item->roomno;
+    $bookingsmaster[$i]['text'] = "Expired";
+    $bookingsmaster[$i]['bubbleHtml'] = "Expired";
+    $bookingsmaster[$i]['barColor'] = "#cc0000";
+    $bookingsmaster[$i]['barBackColor'] = "#cc0000";
+    $bookingsmaster[$i]['moveDisabled'] = "true";
+    $i = $i+1;
+}
+
 
 $bookingsmasterJson = json_encode($bookingsmaster);
-
 
  ?>
 
@@ -118,14 +130,32 @@ $bookingsmasterJson = json_encode($bookingsmaster);
 </style>
 <!-- Main Container -->
 <main id="main-container">
+    <div class="content bg-gray-lighter">
+        <div class="row items-push">
+            <div class="col-sm-7">
+                <h1 class="page-heading">
+                    Advance Booking 
+                </h1>
+            </div>
+            <div class="col-sm-5 text-right hidden-xs">
+                <ol class="breadcrumb push-10-t">
+                    <li>Home</li>
+                    <li><a class="link-effect" href="">Advance Booking</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
     <!-- Page Content -->
 
     <button style="display: none;" id="created" class="js-notify btn btn-sm btn-success" data-notify-type="success" data-notify-icon="fa fa-check" data-notify-message="Booking Created Successfully"></button>
     <button style="display: none;" id="deleted" class="js-notify btn btn-sm btn-success" data-notify-type="success" data-notify-icon="fa fa-check" data-notify-message="Booking Deleted Successfully"></button>  
-    <button style="display: none;" id="occdelete" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Cannot Delete a Occupied Booking"></button>      
+    <button style="display: none;" id="occdelete" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Cannot Delete a Occupied Booking"></button>  
+   <button style="display: none;" id="expdelete" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Cannot Delete a expired booking"></button>     
+   <button style="display: none;" id="latebooking" class="js-notify btn btn-sm btn-danger" data-notify-type="danger" data-notify-icon="fa fa-times" data-notify-message="Booking date should be a future date"></button>             
 
 
     <div class="content">
+
         <div>
         <?php if ($this->session->userdata('error')) { ?>       
         <div class="alert alert-danger"><strong>Error!</strong> <?php echo $this->session->userdata('error'); ?> </div>
@@ -140,6 +170,8 @@ $bookingsmasterJson = json_encode($bookingsmaster);
         </div>
         <br>
         <div class="content bg-white border-b">
+        <h2 class="content-heading">Booking Schedular</h2>
+        <br>
             <div class="row">
                 <div class="col-xs-12">
                     <div id="dp"></div>
@@ -170,6 +202,8 @@ $bookingsmasterJson = json_encode($bookingsmaster);
 
         if (tag == "occ") {
             $("#occdelete").click(); 
+        }else if(tag == "exp"){
+            $("#expdelete").click();
         }else if(tag == "adb"){
         var id = args.source.data.id.substring(3);
         var url = "<?= site_url("frontoffice/deleteAdvanceBooking") ?>";
@@ -185,7 +219,7 @@ $bookingsmasterJson = json_encode($bookingsmaster);
             }
         });            
         }else{
-            alert(tag);
+            alert(args.source.data.id);
         }
 
 
@@ -220,11 +254,19 @@ $bookingsmasterJson = json_encode($bookingsmaster);
                 text: name
             });
 
+
+        var today = new Date().toISOString();
         var start = args.start.toString();
         var end = args.end.toString();
         var roomno = args.resource.substring(1);
-        var added_by = "<?= $this->session->userdata('logged_user'); ?>";             
+        var added_by = "<?= $this->session->userdata('logged_user'); ?>";     
 
+        var startTimems = args.start.getTime();        
+        var todayms = new Date().getTime();
+
+        if (startTimems < todayms) {
+            $("#latebooking").click();
+        }else{
         var url = "<?= site_url("frontoffice/createAdvanceBooking") ?>";
         $.ajax({
             type: "POST",
@@ -237,8 +279,8 @@ $bookingsmasterJson = json_encode($bookingsmaster);
                         $("#created").click();  
                     }
             }
-        });
-
+        });            
+        }
         });
     };
 
@@ -280,3 +322,21 @@ $bookingsmasterJson = json_encode($bookingsmaster);
     </div>
 
     <!-- /bottom -->
+<script >
+    
+$("document").ready(function(){
+
+    var today = new Date().toISOString();
+        $.ajax({
+            type: "GET",
+            url: "<?=site_url("frontoffice/setAdbExpiration")?>",
+            data: {today:today},
+            success: function(data){
+                    if (data == 1) {
+                        console.log('Page initiaated');  
+                    }
+            }
+        });   
+})
+
+</script>

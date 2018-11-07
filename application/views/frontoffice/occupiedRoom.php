@@ -32,13 +32,13 @@ $logged_user = $this->session->userdata('logged_user');
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    New Booking 
+                    Occupied Room info 
                 </h1>
             </div>
             <div class="col-sm-5 text-right hidden-xs">
                 <ol class="breadcrumb push-10-t">
                     <li>Home</li>
-                    <li><a class="link-effect" href="">New Booking</a></li>
+                    <li><a class="link-effect" href="">Occupied Room info</a></li>
                 </ol>
             </div>
         </div>
@@ -64,26 +64,30 @@ $logged_user = $this->session->userdata('logged_user');
     } 
     ?>          
     <div class="row items-push text-uppercase">
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Booking No</small></div>
-            <a class="h3 font-w300 text-success animated flipInX">BR<?=$bookinginfo[0]->booking_no + 1; ?></a>
+            <a class="h3 font-w300 text-primary animated flipInX">BR<?=$bookinginfo[0]->booking_no + 1; ?></a>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Room Number</small></div>
-            <a class="h3 font-w300 text-success animated flipInX">R#<?=$selectedroomno; ?></a>
+            <a class="h3 font-w300 text-primary animated flipInX">R#<?=$selectedroomno; ?></a>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Price</small></div>
-            <a class="h3 font-w300 text-success animated flipInX">LKR <?=$roomInfo[0]->tariff; ?></a>
+            <a class="h3 font-w300 text-primary animated flipInX">LKR <?=$roomInfo[0]->tariff; ?></a>
         </div>
         <div class="col-xs-3">
             <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Room Type</small></div>
-            <a class="h3 font-w300 text-success animated flipInX"><?=$roomInfo[0]->type; ?></a>
+            <a class="h3 font-w300 text-primary animated flipInX"><?=$roomInfo[0]->type; ?></a>
         </div>                
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Status</small></div>
-            <a class="h3 font-w300 text-success animated flipInX"><?=$roomInfo[0]->availibility; ?></a>
-        </div>                
+            <a class="h3 font-w300 text-primary animated flipInX"><?=$roomInfo[0]->availibility; ?></a>
+        </div>
+        <div class="col-xs-3">
+            <div class="text-muted animated fadeIn"><small><i class="si si-user"></i> Guest Name</small></div>
+            <a class="h3 font-w300 text-primary animated flipInX"><?=$roomInfo[0]->availibility; ?></a>
+        </div>                           
 
     </div>
 </div>

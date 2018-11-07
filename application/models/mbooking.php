@@ -20,6 +20,18 @@ class Mbooking extends CI_Model{
 		return $query->result();
     }
 
+    public function setAdbExpiration($dateFor){
+        $query = $this->db->query("UPDATE advance_booking_room SET status='Expired' where end < '$dateFor' ");
+        return $query;
+    }
+
+    public function getExpiredAdbs() {
+        $this->db->order_by("id ASC");
+        $query = $this->db->get_where('advance_booking_room',array('status'=>'Expired'));
+        return $query->result();
+    }    
+
+
 
 
 } 

@@ -9,8 +9,8 @@
 			</div>
 			<div class="col-sm-5 text-right hidden-xs">
 				<ol class="breadcrumb push-10-t">
-					<li>Frontoffice</li>
-					<li><a class="link-effect" href="">Home</a></li>
+					<li>Home</li>
+					<li><a class="link-effect" href="">Frontoffice</a></li>
 				</ol>
 			</div>
 		</div>
