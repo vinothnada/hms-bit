@@ -29,6 +29,19 @@ class Mbooking extends CI_Model{
         $this->db->order_by("id ASC");
         $query = $this->db->get_where('advance_booking_room',array('status'=>'Expired'));
         return $query->result();
+    }
+
+    public function getActiveAdbs() {
+        $this->db->order_by("start DESC");
+        $query = $this->db->get_where('advance_booking_room',array('status'=>'Active'));
+        return $query->result();
+    }    
+
+    public function getCurrentOccupiedBookingDetailsOfRoom($roomno){
+        $this->db->where("room_no",$roomno);
+        $this->db->where("status","in");
+        $query = $this->db->get('booking_room');
+        return $query->result();
     }    
 
 

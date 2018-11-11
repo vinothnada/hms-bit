@@ -66,7 +66,7 @@
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">User Configuration</span></li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Users</span></a>
-                            <ul>
+                            <ul class="linkstohref">
                                 <li>
                                     <a href="<?=site_url('sadmin/getUsers');?>">All Users</a>
                                 </li>
@@ -77,7 +77,7 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">General</span></a>
-                            <ul>
+                            <ul class="linkstohref">
                                 <li>
                                     <a href="<?=site_url('sadmin/hotelInfo');?>">Hotel Info</a>
                                 </li>
@@ -88,7 +88,7 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Frontoffice Conf</span></a>
-                            <ul>
+                            <ul class="linkstohref">
                                 <li>
                                     <a href="<?=site_url('units/types');?>">Rooms and Floor Types</a>
                                 </li>
@@ -99,7 +99,7 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Menu Configuration</span></a>
-                            <ul>
+                            <ul class="linkstohref">
                                 <li>
                                     <a href="<?=site_url('units/menu');?>">Menu Category</a>
                                 </li>
@@ -110,7 +110,7 @@
                         </li> 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Restaurant Conf</span></a>
-                            <ul>
+                            <ul class="linkstohref">
                                 <li>
                                     <a href="<?=site_url('restaurant/tablemaster');?>">Table Master</a>
                                 </li>
@@ -121,7 +121,7 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Bar Conf</span></a>
-                            <ul>
+                            <ul class="linkstohref">
                                 <li>
                                     <a href="<?=site_url('bar/tablemaster');?>">Table Master</a>
                                 </li>
@@ -132,7 +132,7 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Front Office</span></a>
-                            <ul>
+                            <ul class="linkstohref">
                                 <li>
                                     <a href="<?=site_url('frontoffice/home');?>">Home</a>
                                 </li>
@@ -143,7 +143,15 @@
                                     <a href="<?=site_url('Guests');?>">Guests</a>
                                 </li>                                                                        
                             </ul>
-                        </li>                        
+                        </li>
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Promotions</span></a>
+                            <ul class="linkstohref">
+                                <li>
+                                    <a href="<?=site_url('promotions');?>">Home</a>
+                                </li>
+                            </ul>
+                        </li>                                                    
 
                     </ul>
                 </div>
@@ -246,3 +254,12 @@
         <!-- END Header Navigation Left -->
     </header>
     <!-- END Header -->
+<script src="<?= base_url(); ?>assets/js/core/jquery.min.js"></script>
+
+<script >
+    
+
+    $('.linkstohref a').click(function(){
+        $(this).addClass('active');
+    })
+</script>

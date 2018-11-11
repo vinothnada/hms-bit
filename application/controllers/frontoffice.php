@@ -11,7 +11,6 @@ class Frontoffice extends CI_Controller{
 
   }
 
-
   public function home(){
     $data["roomsdata"] = $this->msadmin->getRoomMasterData();
     $data['floortypes'] = $this->mcrud->getAllDataAsc('floor_type','id');
@@ -34,7 +33,7 @@ class Frontoffice extends CI_Controller{
     $data['roomInfo']  = $this->mbooking->getRoomInfo($_GET['id']);
     $data['bookinginfo']  = $this->mcrud->getAllDataDesc('booking_room','booking_no');
     $data["taxservicesdata"] = $this->mcrud->getAllDataDesc('taxservices','modifiedDate');
-    $data['adbook']  = $this->mcrud->getAllDataAscStatusActive('advance_booking_room','id');
+    $data['adbook']  = $this->mbooking->getActiveAdbs();
     $data['adbookall']  = $this->mcrud->getAllDataDesc('advance_booking_room','start');
 
 
@@ -99,6 +98,14 @@ class Frontoffice extends CI_Controller{
           'mobile'=>$this->input->post('mobile'),
           'nationality'=>$this->input->post('nationality')
       );    
+
+      $debitData = array(
+          'booking_no'=>$this->input->post('bookingno'),
+          'type'=>'Booking',
+          'advance'=>$this->input->post('advance'),
+          'total'=>$this->input->post('tariff'),
+          'due'=>$this->input->post('tariff') - $this->input->post('advance')
+      );         
       
       $currentGuestId = $this->input->post('currentGuest') ;
 
@@ -118,11 +125,11 @@ class Frontoffice extends CI_Controller{
                   'modified_By'=>$this->input->post('modified_By')
               );
             $bookingId = $this->mcrud->addDataByForm('booking_room',$bookingData);
-
               $roomData = array(
                   'availibility'=>"Occupied",
               );
             $updatedRoom = $this->mcrud->updateDataByForm('room_master',$roomData,array('roomno' => $this->input->post('roomno')));
+            $debitDataId = $this->mcrud->addDataByForm('debit',$debitData);
 
         $this->session->set_userdata('success', ' Booking has been created succesfully!');
         redirect("frontoffice/newBooking?id=".$this->input->post('roomno'));
@@ -206,11 +213,11 @@ class Frontoffice extends CI_Controller{
     }
 
     $data['roomInfo']  = $this->mbooking->getRoomInfo($_GET['id']);
-    $data['bookinginfo']  = $this->mcrud->getDataById('booking_room',$_GET['id'],'room_no');
+    $data['bookinginfo']  = $this->mbooking->getCurrentOccupiedBookingDetailsOfRoom($_GET['id']);
     $data["taxservicesdata"] = $this->mcrud->getAllDataDesc('taxservices','modifiedDate');
 
-var_dump($data['bookinginfo']);
-    
+    $guest_id = $data['bookinginfo'][0]->guest_id;
+    $data["guestinfo"] = $this->mcrud->getDataById('guests',$guest_id,'id');
 
     $this->load->view('includes/header_db');
     $this->load->view('superadmin/navigation');

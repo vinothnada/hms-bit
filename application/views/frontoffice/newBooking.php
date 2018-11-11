@@ -25,6 +25,8 @@ $logged_user = $this->session->userdata('logged_user');
 
 ?>
 
+
+
 <!-- Main Container -->
 <main id="main-container">
 
@@ -89,6 +91,53 @@ $logged_user = $this->session->userdata('logged_user');
 </div>
 <br>
 
+<div class="row" >
+    <div class="col-xs-12">
+        <div class="block" style="height: 220px;overflow-y: scroll">
+            <div class="block-header">  
+                <h3 class="block-title">Advance Booking information of Room Number <strong><?=$selectedroomno;?></strong></h3>
+            </div>        
+            <div class="block-content">
+            <?php if (isset($adbookall)) { ?>            
+                <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">                
+                  <?php if (count($adbookall) > 0) { ?>
+                  <table class="table table-bordered table-striped js-dataTable-full js-table-section">
+                   <thead>
+                      <tr>
+                         <th class="hidden-xs" >Name/Contact</th>                  
+                         <th class="hidden-xs" >Start date</th>
+                         <th class="hidden-xs" >end date</th>
+                         <th class="hidden-xs" >Status</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                   <?php foreach ($adbookall as $items) { ?>
+                   <?php if ($items->roomno == $selectedroomno) { ?>
+                   <tr>
+                     <td class="hidden-xs"><?=$items->name;?></td>
+                     <td class="hidden-xs"><?= substr($items->start, 0,10);?></td>
+                     <td class="hidden-xs"><?= substr($items->end, 0,10);?></td>
+                     <?php if ($items->status == 'Active') { ?>
+                     <td class="hidden-xs"><span  class="label label-success"><?=$items->status;?></span></td>
+                     <?php }else{ ?>
+                     <td class="hidden-xs"><span  class="label label-warning"><?=$items->status;?></span></td>
+                     <?php } ?>
+                 </tr>
+                 <?php } ?>
+                 <?php } ?>
+             </tbody>
+         </table>
+         <?php }else{ ?>
+         <h5 style="text-align: center"><span class="text-info">No Advance Booking records Found</span></h5><br>
+         <?php } ?>
+     </div>
+<?php } ?>
+ </div>
+</div>
+</div>              
+</div>
+
+
 <div class="content bg-white border-b">
     <div class="row">
         <div class="col-xs-6">
@@ -116,49 +165,7 @@ $logged_user = $this->session->userdata('logged_user');
 <div id="searchDiv" style="display: none;">Loading</div>
 <br><br>
 
-<div class="row">
-    <div class="col-xs-12">
-        <div class="block" style="height: 350px;overflow-y: scroll">
-            <div class="block-header">  
-                <h3 class="block-title">Advance Booking information of Room Number <strong><?=$selectedroomno;?></strong></h3>
-            </div>        
-            <div class="block-content">
-                <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">                
-                  <?php if (count($adbookall) > 0) { ?>
-                  <table class="table table-bordered table-striped js-dataTable-full js-table-section">
-                     <thead>
-                      <tr>
-                       <th class="hidden-xs" >Name/Contact</th>                  
-                       <th class="hidden-xs" >Start date</th>
-                       <th class="hidden-xs" >end date</th>
-                       <th class="hidden-xs" >Status</th>
-                   </tr>
-               </thead>
-               <tbody>
-                 <?php foreach ($adbookall as $items) { ?>
-                 <?php if ($items->roomno == $selectedroomno) { ?>
-                 <tr>
-                   <td class="hidden-xs"><?=$items->name;?></td>
-                   <td class="hidden-xs"><?= substr($items->start, 0,10);?></td>
-                   <td class="hidden-xs"><?= substr($items->end, 0,10);?></td>
-                   <?php if ($items->status == 'Active') { ?>
-                   <td class="hidden-xs"><span  class="label label-success"><?=$items->status;?></span></td>
-                   <?php }else{ ?>
-                   <td class="hidden-xs"><span  class="label label-warning"><?=$items->status;?></span></td>
-                   <?php } ?>
-               </tr>
-               <?php } ?>
-               <?php } ?>
-           </tbody>
-       </table>
-       <?php }else{ ?>
-       <h5 style="text-align: center"><span class="text-info">No Advance Booking records Found</span></h5><br>
-       <?php } ?>
-   </div>
-</div>
-</div>
-</div>              
-</div>
+
 <form class="js-validation-form form-horizontal" action="<?= site_url("frontoffice/addNewBooking"); ?>" method="post">
     <div class="row">
         <div class="col-lg-6">
@@ -287,20 +294,27 @@ $logged_user = $this->session->userdata('logged_user');
                         <div class="col-md-7">
                             <input class="form-control" type="text" id="tariff" name="tariff" value="<?=$roomInfo[0]->tariff; ?>" readonly>
                         </div>
-                    </div>                            
+                    </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="tax">Tax</label>
                         <div class="col-md-7">
-                            <input class="form-control" type="text" id="tax" name="tax" value="<?= $taxArray[0]; ?>&nbsp;%" readonly>
+                            <input class="form-control" type="text" id="tax" name="tax" value="<?=$taxArray[0].'%'; ?>" readonly>
                         </div>
-                    </div>                            
+                    </div>                                                                           
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="tariffwithtax">Tariff with Tax</label>
-                        <?php $tariffwithtax = $roomInfo[0]->tariff + $roomInfo[0]->tariff*$taxArray[0]/100; ?>
+                        <?php $tariffwithtax = $roomInfo[0]->tariff + ($roomInfo[0]->tariff*$taxArray[0]/100); ?>
                         <div class="col-md-7">
                             <input class="form-control" type="text" id="tariffwithtax" name="tariffwithtax" value="<?=$tariffwithtax; ?>" readonly>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="advance">Advance</label>
+                        <div class="col-md-7">
+                            <input class="form-control" type="text" id="advance" name="advance">
+                        </div>
+                    </div>                     
+
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="tariffwithtax">Link With Advance Booking</label>
                         <div class="col-md-7">
@@ -313,8 +327,8 @@ $logged_user = $this->session->userdata('logged_user');
                         <label class="col-md-4 control-label" for="adbLinked">Advance booking number to link</label>
                         <div class="col-md-7">
                             <select class="form-control" id="adbLinked" name="adbLinked" style="width: 100%;" data-placeholder="Choose one..">
-                            <option value="">Select</option>
-                                <?php foreach ($adbookall as $items) { ?>
+                                <option value="">Select</option>
+                                <?php foreach ($adbook as $items) { ?>
                                 <?php if ($items->roomno == $selectedroomno) { ?>
                                 <option value="<?=$items->roomno;?>"><?=$items->name;?></option>
                                 <?php } ?>
