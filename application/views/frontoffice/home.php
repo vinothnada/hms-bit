@@ -27,6 +27,16 @@
 		<!-- User Widgets -->
 		<h2 class="content-heading">Rooms Status</h2>
 		<!-- User Simple Widgets -->
+			<?php if ($this->session->userdata('error')) { ?>       
+			<div class="alert alert-danger"><strong>Error!</strong> <?php echo $this->session->userdata('error'); ?> </div>
+			<?php $this->session->unset_userdata('error');
+		}
+		?>
+    		<?php if ($this->session->userdata('success')) { ?>      
+    		<div class="alert alert-success"><strong>Success!</strong> <?php echo $this->session->userdata('success'); ?> </div>
+    		<?php $this->session->unset_userdata('success');
+	} 
+	?>   		
 		<div class="row">
 			<div class="col-sm-6 col-lg-3">
 				<a class="block block-rounded block-link-hover3" href="javascript:void(0)">
@@ -157,7 +167,7 @@
 										$linkUrl = "#";
 										$rid="maintananceRoom";										
 									}elseif ($item2->availibility == "Housekeeping") {
-										$classstring .= "info";
+										$classstring .= "warning";
 										$linkUrl = "#";
 										$rid="cleaningRoom";										
 									} ?>                            

@@ -27,18 +27,21 @@ CREATE TABLE IF NOT EXISTS `advance_booking_room` (
   `added_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('Active','Cancelled','Linked','Expired') NOT NULL DEFAULT 'Active',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hms.advance_booking_room: ~7 rows (approximately)
+-- Dumping data for table hms.advance_booking_room: ~9 rows (approximately)
+DELETE FROM `advance_booking_room`;
 /*!40000 ALTER TABLE `advance_booking_room` DISABLE KEYS */;
-INSERT IGNORE INTO `advance_booking_room` (`id`, `name`, `start`, `end`, `roomno`, `added_by`, `added_date`, `status`) VALUES
+INSERT INTO `advance_booking_room` (`id`, `name`, `start`, `end`, `roomno`, `added_by`, `added_date`, `status`) VALUES
 	(10, 'AB1', '2018-11-01 00:00:00', '2018-11-03 00:00:00', 6, 'vicky nada', '2018-11-11 13:16:22', 'Expired'),
 	(11, 'Ab2', '2018-11-03 00:00:00', '2018-11-05 00:00:00', 3, 'vicky nada', '2018-11-06 08:54:57', 'Expired'),
 	(13, 'Ab4', '2018-11-05 00:00:00', '2018-11-10 00:00:00', 5, 'vicky nada', '2018-11-10 19:32:25', 'Expired'),
 	(14, 'Ac3', '2018-11-06 00:00:00', '2018-11-07 00:00:00', 3, 'vicky nada', '2018-11-09 22:35:43', 'Expired'),
 	(15, 'pudd', '2018-11-08 00:00:00', '2018-11-09 00:00:00', 6, 'vicky nada', '2018-11-09 22:35:43', 'Expired'),
 	(16, 'asd', '2018-11-06 00:00:00', '2018-11-08 00:00:00', 2, 'vicky nada', '2018-11-09 22:35:43', 'Expired'),
-	(18, '123', '2018-11-06 00:00:00', '2018-11-08 00:00:00', 3, 'vicky_nada', '2018-11-09 22:35:43', 'Expired');
+	(18, '123', '2018-11-06 00:00:00', '2018-11-08 00:00:00', 3, 'vicky_nada', '2018-11-09 22:35:43', 'Expired'),
+	(19, '123', '2018-11-13 00:00:00', '2018-11-15 00:00:00', 3, 'vicky nada', '2018-11-12 19:31:24', 'Linked'),
+	(20, '123', '2018-11-15 00:00:00', '2018-11-16 00:00:00', 2, 'vicky nada', '2018-11-12 19:36:40', 'Cancelled');
 /*!40000 ALTER TABLE `advance_booking_room` ENABLE KEYS */;
 
 -- Dumping structure for table hms.booking_room
@@ -60,13 +63,15 @@ CREATE TABLE IF NOT EXISTS `booking_room` (
   CONSTRAINT `booking_room_ibfk_1` FOREIGN KEY (`guest_id`) REFERENCES `guests` (`id`),
   CONSTRAINT `booking_room_ibfk_2` FOREIGN KEY (`room_no`) REFERENCES `room_master` (`roomno`),
   CONSTRAINT `booking_room_ibfk_3` FOREIGN KEY (`modified_By`) REFERENCES `employee` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hms.booking_room: ~1 rows (approximately)
+-- Dumping data for table hms.booking_room: ~3 rows (approximately)
+DELETE FROM `booking_room`;
 /*!40000 ALTER TABLE `booking_room` DISABLE KEYS */;
-INSERT IGNORE INTO `booking_room` (`id`, `booking_no`, `room_no`, `guest_id`, `chkin_date`, `chkout_date`, `modified_date`, `modified_By`, `status`) VALUES
-	(1, 1, 1, 1, '2018-11-11 00:00:00', '2018-11-12 00:00:00', '2018-11-11 18:30:16', 'Vicky Nada', 'in'),
-	(4, 2, 2, 1, '2018-11-11 18:53:00', '2018-11-12 18:53:00', '2018-11-11 18:59:18', 'vicky nada', 'in');
+INSERT INTO `booking_room` (`id`, `booking_no`, `room_no`, `guest_id`, `chkin_date`, `chkout_date`, `modified_date`, `modified_By`, `status`) VALUES
+	(1, 5, 1, 1, '2018-11-11 00:00:00', '2018-11-12 00:00:00', '2018-11-12 22:12:17', 'Vicky Nada', 'in'),
+	(4, 6, 6, 1, '2018-11-11 18:53:00', '2018-11-13 22:41:00', '2018-11-13 00:07:47', 'vicky nada', 'in'),
+	(5, 7, 3, 1, '2018-11-12 19:30:00', '2018-11-13 19:30:00', '2018-11-12 22:13:30', 'vicky nada', 'in');
 /*!40000 ALTER TABLE `booking_room` ENABLE KEYS */;
 
 -- Dumping structure for table hms.debit
@@ -81,12 +86,14 @@ CREATE TABLE IF NOT EXISTS `debit` (
   PRIMARY KEY (`id`),
   KEY `booking_no` (`booking_no`),
   CONSTRAINT `debit_ibfk_1` FOREIGN KEY (`booking_no`) REFERENCES `booking_room` (`booking_no`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- Dumping data for table hms.debit: ~0 rows (approximately)
+-- Dumping data for table hms.debit: ~2 rows (approximately)
+DELETE FROM `debit`;
 /*!40000 ALTER TABLE `debit` DISABLE KEYS */;
-INSERT IGNORE INTO `debit` (`id`, `type`, `advance`, `total`, `due`, `datecreated`, `booking_no`) VALUES
-	(1, 'Booking', 2000, 6000, 4000, '2018-11-11 18:59:38', 2);
+INSERT INTO `debit` (`id`, `type`, `advance`, `total`, `due`, `datecreated`, `booking_no`) VALUES
+	(1, 'Booking', 2000, 6000, 4000, '2018-11-11 18:59:38', 6),
+	(2, 'Booking', 2000, 11000, 9000, '2018-11-12 19:31:24', 7);
 /*!40000 ALTER TABLE `debit` ENABLE KEYS */;
 
 -- Dumping structure for table hms.departments
@@ -97,8 +104,9 @@ CREATE TABLE IF NOT EXISTS `departments` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.departments: ~7 rows (approximately)
+DELETE FROM `departments`;
 /*!40000 ALTER TABLE `departments` DISABLE KEYS */;
-INSERT IGNORE INTO `departments` (`deptid`, `deptname`) VALUES
+INSERT INTO `departments` (`deptid`, `deptname`) VALUES
 	(1, 'Administration'),
 	(2, 'Front Office'),
 	(3, 'House Keeping'),
@@ -130,8 +138,9 @@ CREATE TABLE IF NOT EXISTS `employee` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.employee: ~11 rows (approximately)
+DELETE FROM `employee`;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT IGNORE INTO `employee` (`empid`, `name`, `Status`, `tp`, `department`, `password`, `role`, `notes`, `createdDate`, `updatedDate`, `created`) VALUES
+INSERT INTO `employee` (`empid`, `name`, `Status`, `tp`, `department`, `password`, `role`, `notes`, `createdDate`, `updatedDate`, `created`) VALUES
 	(1, 'Madan', 1, 758965475, 4, '202cb962ac59075b964b07152d234b70', 3, 'khkj', '2018-08-12 12:38:00', '2018-08-14 23:37:04', NULL),
 	(2, 'Arun Kumar', 1, 755855855, 1, '202cb962ac59075b964b07152d234b70', 2, NULL, '2018-08-12 11:37:17', '2018-08-12 11:37:17', NULL),
 	(3, 'Joshop Kison', 1, 712569874, 7, '202cb962ac59075b964b07152d234b70', 4, NULL, '2018-08-12 11:37:17', '2018-08-12 11:37:17', NULL),
@@ -153,8 +162,9 @@ CREATE TABLE IF NOT EXISTS `floor_type` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.floor_type: ~4 rows (approximately)
+DELETE FROM `floor_type`;
 /*!40000 ALTER TABLE `floor_type` DISABLE KEYS */;
-INSERT IGNORE INTO `floor_type` (`id`, `name`, `building`) VALUES
+INSERT INTO `floor_type` (`id`, `name`, `building`) VALUES
 	(1, 'Ground Floor', 'Building1'),
 	(2, 'Floor1', 'Building1'),
 	(3, 'Floor2', 'Building1'),
@@ -179,8 +189,9 @@ CREATE TABLE IF NOT EXISTS `guests` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.guests: ~2 rows (approximately)
+DELETE FROM `guests`;
 /*!40000 ALTER TABLE `guests` DISABLE KEYS */;
-INSERT IGNORE INTO `guests` (`id`, `title`, `firstname`, `lastname`, `gender`, `address`, `city`, `mobile`, `nationality`, `identityType`, `identityNo`, `status`) VALUES
+INSERT INTO `guests` (`id`, `title`, `firstname`, `lastname`, `gender`, `address`, `city`, `mobile`, `nationality`, `identityType`, `identityNo`, `status`) VALUES
 	(1, 'Mr', 'Ram', 'Gopal', 'Male', '30', 'Colombo', 25658, 'Srilankan', 'Nic', '902900085V', 'Active'),
 	(4, 'Mr', 'Chandra', 'Mouli', 'Male', '36,Malay Street', 'Colombo-2', 776546789, 'Sri Lankan', 'Nic', '897678765V', 'Active');
 /*!40000 ALTER TABLE `guests` ENABLE KEYS */;
@@ -201,8 +212,9 @@ CREATE TABLE IF NOT EXISTS `hotel_info` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.hotel_info: ~0 rows (approximately)
+DELETE FROM `hotel_info`;
 /*!40000 ALTER TABLE `hotel_info` DISABLE KEYS */;
-INSERT IGNORE INTO `hotel_info` (`id`, `name`, `slogan`, `address1`, `address2`, `address3`, `phone`, `email`, `fax`, `mobile`) VALUES
+INSERT INTO `hotel_info` (`id`, `name`, `slogan`, `address1`, `address2`, `address3`, `phone`, `email`, `fax`, `mobile`) VALUES
 	(1, 'K.S Food and Hotels', 'Quality and Luxury is our Aim', 'No 35', 'Central Street', 'Colombo-11', 214748364, 'ksfood@gmail.com', 214748364, 214783647);
 /*!40000 ALTER TABLE `hotel_info` ENABLE KEYS */;
 
@@ -215,8 +227,9 @@ CREATE TABLE IF NOT EXISTS `menu_category` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.menu_category: ~5 rows (approximately)
+DELETE FROM `menu_category`;
 /*!40000 ALTER TABLE `menu_category` DISABLE KEYS */;
-INSERT IGNORE INTO `menu_category` (`id`, `name`, `status`) VALUES
+INSERT INTO `menu_category` (`id`, `name`, `status`) VALUES
 	(1, 'cat1', 'Active'),
 	(2, 'cat2', 'Blocked'),
 	(3, 'cat3', 'Active'),
@@ -240,8 +253,9 @@ CREATE TABLE IF NOT EXISTS `menu_master` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.menu_master: ~7 rows (approximately)
+DELETE FROM `menu_master`;
 /*!40000 ALTER TABLE `menu_master` DISABLE KEYS */;
-INSERT IGNORE INTO `menu_master` (`id`, `itemname`, `rate`, `itemcat`, `itemunit`, `status`) VALUES
+INSERT INTO `menu_master` (`id`, `itemname`, `rate`, `itemcat`, `itemunit`, `status`) VALUES
 	(1, 'hytuwww', 2563, 3, 4, 'Active'),
 	(3, 'bgt', 2555, 2, 4, 'Active'),
 	(4, 'hytu', 2563, 2, 3, 'Active'),
@@ -259,8 +273,9 @@ CREATE TABLE IF NOT EXISTS `menu_unit` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.menu_unit: ~5 rows (approximately)
+DELETE FROM `menu_unit`;
 /*!40000 ALTER TABLE `menu_unit` DISABLE KEYS */;
-INSERT IGNORE INTO `menu_unit` (`id`, `name`, `status`) VALUES
+INSERT INTO `menu_unit` (`id`, `name`, `status`) VALUES
 	(1, 'pkg', 'Active'),
 	(2, 'pkg2', 'Active'),
 	(3, 'pkg3', 'Active'),
@@ -276,8 +291,9 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.roles: ~4 rows (approximately)
+DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT IGNORE INTO `roles` (`role_id`, `role_name`) VALUES
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
 	(1, 'Superadmin'),
 	(2, 'Admin'),
 	(3, 'Frontstaff'),
@@ -301,14 +317,15 @@ CREATE TABLE IF NOT EXISTS `room_master` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.room_master: ~5 rows (approximately)
+DELETE FROM `room_master`;
 /*!40000 ALTER TABLE `room_master` DISABLE KEYS */;
-INSERT IGNORE INTO `room_master` (`id`, `roomno`, `roomtype`, `floortype`, `toilet`, `availibility`) VALUES
+INSERT INTO `room_master` (`id`, `roomno`, `roomtype`, `floortype`, `toilet`, `availibility`) VALUES
 	(1, 1, 3, 3, 'English', 'Available'),
-	(2, 2, 1, 1, 'English', 'Occupied'),
-	(3, 3, 2, 2, 'English', 'Available'),
+	(2, 2, 1, 1, 'English', 'Housekeeping'),
+	(3, 3, 2, 2, 'English', 'Occupied'),
 	(4, 4, 2, 2, 'English', 'Available'),
 	(5, 5, 4, 4, 'English', 'Maintanance'),
-	(6, 6, 1, 1, 'English', 'Available'),
+	(6, 6, 1, 1, 'English', 'Occupied'),
 	(7, 7, 1, 2, 'English', 'Maintanance');
 /*!40000 ALTER TABLE `room_master` ENABLE KEYS */;
 
@@ -323,8 +340,9 @@ CREATE TABLE IF NOT EXISTS `room_type` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.room_type: ~4 rows (approximately)
+DELETE FROM `room_type`;
 /*!40000 ALTER TABLE `room_type` DISABLE KEYS */;
-INSERT IGNORE INTO `room_type` (`id`, `tariff`, `type`, `status`, `remarks`) VALUES
+INSERT INTO `room_type` (`id`, `tariff`, `type`, `status`, `remarks`) VALUES
 	(1, 6000, 'DELUXE ROOM', 'Active', 'Deluxe type rooms'),
 	(2, 11000, 'EXECUTIVE ROOM', 'Active', 'Executive type'),
 	(3, 4000, 'SINGLE ROOM', 'Active', 'One person'),
@@ -342,8 +360,9 @@ CREATE TABLE IF NOT EXISTS `table_master` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.table_master: ~4 rows (approximately)
+DELETE FROM `table_master`;
 /*!40000 ALTER TABLE `table_master` DISABLE KEYS */;
-INSERT IGNORE INTO `table_master` (`id`, `tblnum`, `seats`, `status`, `cat`) VALUES
+INSERT INTO `table_master` (`id`, `tblnum`, `seats`, `status`, `cat`) VALUES
 	(1, 1, 10, 'Blocked', 'Restaurant'),
 	(2, 2, 6, 'Active', 'Restaurant'),
 	(3, 3, 4, 'Active', 'Restaurant'),
@@ -362,8 +381,9 @@ CREATE TABLE IF NOT EXISTS `taxservices` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table hms.taxservices: ~7 rows (approximately)
+DELETE FROM `taxservices`;
 /*!40000 ALTER TABLE `taxservices` DISABLE KEYS */;
-INSERT IGNORE INTO `taxservices` (`id`, `name`, `type`, `value`, `modifiedDate`, `modifiedBy`) VALUES
+INSERT INTO `taxservices` (`id`, `name`, `type`, `value`, `modifiedDate`, `modifiedBy`) VALUES
 	(1, 'Tax', 'Tax', 4.5, '2018-10-23 00:13:46', 'Admin'),
 	(2, 'Bar', 'ServiceCharge', 18, '2018-10-22 23:40:54', 'Admin'),
 	(3, 'Restaurant', 'ServiceCharge', 15, '2018-10-22 23:40:58', 'Admin'),

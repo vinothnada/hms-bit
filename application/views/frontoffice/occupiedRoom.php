@@ -21,7 +21,6 @@ $tomorrow = date("m/d/Y h:i:sa", time() + 86400);
 $diff = abs(strtotime($tomorrow) - strtotime($currentDate))/(60*60);
 
 $logged_user = $this->session->userdata('logged_user');
-
 ?>
 
 <!-- Main Container -->
@@ -101,7 +100,7 @@ $logged_user = $this->session->userdata('logged_user');
 <br><br>
 
 
-<form class="js-validation-form form-horizontal" action="<?= site_url("frontoffice/addNewBooking"); ?>" method="post">
+<form class="js-validation-form form-horizontal" action="<?= site_url("frontoffice/extendBooking"); ?>" method="post">
     <div class="row">
         
         <div class="col-lg-6">
@@ -147,11 +146,32 @@ $logged_user = $this->session->userdata('logged_user');
                         <div class="col-md-7">
                             <input class="form-control" type="text" id="tariffwithtax" name="tariffwithtax" value="<?=$tariffwithtax; ?>" readonly>
                         </div>
-                    </div>                             
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" >Change of Room</label>
+                        <div class="col-md-7">
+                            <label class="css-input switch switch-sm switch-warning">
+                                <input type="checkbox" id="checkLinkedAd" name="checkLinkedAd"><span></span>
+                            </label>                                    
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: none" id="adLinkSelect">
+                        <label class="col-md-4 control-label" for="newRoomNo">Available rooms</label>
+                        <div class="col-md-7">
+                            <select class="form-control" id="newRoomNo" name="newRoomNo" style="width: 100%;" data-placeholder="Choose one..">
+                                <option value="">Select</option>
+                                <?php foreach ($availableRooms as $items) { ?>
+                                <option value="<?=$items->roomno;?>">Room : <?=$items->roomno;?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="bookingno" id="bookingno" value="<?=$bookinginfo[0]->booking_no;?>" />
+                    <input type="hidden" name="currentRoomNo" id="currentRoomNo" value="<?=$selectedroomno; ?>" />
                     <div class="form-group">
                         <div class="col-md-8 col-md-offset-4">
-                            <button class="btn btn-sm btn-success" type="submit">Update Booking</button>
-                            <button class="btn btn-sm btn-danger" type="submit">Checkout</button>
+                            <button class="btn btn-sm btn-success" type="submit">Extend Booking</button>
+                            <a href="ass"><button class="btn btn-sm btn-danger" type="button">Checkout</button></a>
                         </div>
                     </div>
                 </div>
@@ -177,11 +197,23 @@ $('#chkout_date').blur(function(){
     var chkout_date_current = $('#chkout_date_current').val();
     var chkoutdate = $('#chkout_date').val();
 
-    if (chkoutdate < chkout_date_current) {
+    if (Date.parse(chkoutdate) <= Date.parse(chkout_date_current)) {
         $("#chkinerror").click();
-        $('#chkout_date').val('Choose a date..');        
+        $('#chkout_date').val('');        
     }
 
 });
+
+</script>
+
+<script>
+
+    $("#checkLinkedAd").change(function () {
+        if (this.checked) {
+            $("#adLinkSelect").css("display","block");
+        }else{
+            $("#adLinkSelect").css("display","none");
+        }
+    });
 
 </script>

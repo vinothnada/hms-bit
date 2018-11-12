@@ -21,8 +21,6 @@ $tomorrow = date("m/d/Y h:i:sa", time() + 86400);
 $diff = abs(strtotime($tomorrow) - strtotime($currentDate))/(60*60);
 
 $logged_user = $this->session->userdata('logged_user');
-
-
 ?>
 
 
@@ -316,7 +314,7 @@ $logged_user = $this->session->userdata('logged_user');
                     </div>                     
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="tariffwithtax">Link With Advance Booking</label>
+                        <label class="col-md-4 control-label" >Link With Advance Booking</label>
                         <div class="col-md-7">
                             <label class="css-input switch switch-sm switch-primary">
                                 <input type="checkbox" id="checkLinkedAd"><span></span>
@@ -330,7 +328,7 @@ $logged_user = $this->session->userdata('logged_user');
                                 <option value="">Select</option>
                                 <?php foreach ($adbook as $items) { ?>
                                 <?php if ($items->roomno == $selectedroomno) { ?>
-                                <option value="<?=$items->roomno;?>"><?=$items->name;?></option>
+                                <option value="<?=$items->id;?>"><?=$items->name;?></option>
                                 <?php } ?>
                                 <?php } ?>
                             </select>
