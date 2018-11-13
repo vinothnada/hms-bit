@@ -7,10 +7,7 @@
                         <div class="block-header bg-primary">
                             <ul class="block-options">
                                 <li>
-                                    <a href="base_pages_reminder.html">Forgot Password?</a>
-                                </li>
-                                <li>
-                                    <a href="base_pages_register.html" data-toggle="tooltip" data-placement="left" title="New Account"><i class="si si-plus"></i></a>
+                                    <a href="<?=base_url();?>index.php/login/changePassword/">Change Password</a>
                                 </li>
                             </ul>
                             <h3 class="block-title">Login</h3>

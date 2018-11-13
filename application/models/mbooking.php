@@ -21,7 +21,7 @@ class Mbooking extends CI_Model{
     }
 
     public function setAdbExpiration($dateFor){
-        $query = $this->db->query("UPDATE advance_booking_room SET status='Expired' where end < '$dateFor' ");
+        $query = $this->db->query("UPDATE advance_booking_room SET status='Expired' where end < '$dateFor' and status='Active' ");
         return $query;
     }
 

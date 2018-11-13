@@ -10,4 +10,13 @@ class Mlogin extends CI_Model{
             return $Query->result();
         }
     }
+
+    function changePassword($userId,$newPassword){
+    	$datafetched  = array(
+    		'password'=> md5($newPassword)
+    	);
+
+        $a = $this->db->update('employee', $datafetched, array('name'=>$userId));
+        return $a;
+    }
 } 

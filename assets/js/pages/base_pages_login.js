@@ -28,7 +28,17 @@ var BasePagesLogin = function() {
                 },
                 'login-password': {
                     required: true
-                }
+                },
+                'oldPassword': {
+                    required: true
+                },
+                'newPassword': {
+                    required: true,
+                    minlength:5
+                },
+                'confirmPassword': {
+                    equalTo : "#newPassword"
+                },                                                
             },
             messages: {
                 'login-username': {
