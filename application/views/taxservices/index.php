@@ -85,6 +85,11 @@
 </div>
 
 <div class="content">
+<?php $this->session->set_userdata('csvdata',$taxservicesdata); ?>
+<div class="col-xs-12">
+    <br>
+    <a href="<?= site_url("reports/exportTaxServices") ?>"><button class="btn btn-sm btn-danger pull-right" type="button" id="cid" ><i class="fa fa-file-pdf-o"></i>&nbsp; Export CSV</button></a>
+</div>
 	<div class="block">
 		<div class="block-header">
 			<h5>Update History </h5>

@@ -31,7 +31,10 @@
 	<div class="block">
 		<div class="block-header">
 			<div class="block-options">
-				<button class="	btn btn-primary" data-toggle="modal" data-target="#modal-popin-addMenuCategory"><i class="glyphicon-plus"></i>&nbsp; Add</button>
+				<button class="	btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-popin-addMenuCategory"><i class="glyphicon-plus"></i>&nbsp; Add</button>
+		<?php $this->session->set_userdata('csvdata1',$menucats); ?>
+        &nbsp;
+        <a href="<?= site_url("reports/exportMenucats") ?>"><button class="btn btn-sm btn-danger pull-right" type="button" id="cid" ><i class="fa fa-file-pdf-o"></i>&nbsp; Export CSV</button></a>				
 			</div>
 			<h3 class="block-title">Menu Categories</h3>
 		</div>
@@ -77,7 +80,10 @@
 	<div class="block">
 		<div class="block-header">
 			<div class="block-options">
-				<button class="	btn btn-primary" data-toggle="modal" data-target="#modal-popin-addMenuUnit"><i class="glyphicon-plus"></i>&nbsp; Add</button>
+				<button class="	btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-popin-addMenuUnit"><i class="glyphicon-plus"></i>&nbsp; Add</button>
+				<?php $this->session->set_userdata('csvdata2',$menuunits); ?>
+		        &nbsp;
+		        <a href="<?= site_url("reports/exportMenuunits") ?>"><button class="btn btn-sm btn-danger pull-right" type="button" id="cid" ><i class="fa fa-file-pdf-o"></i>&nbsp; Export CSV</button></a>					
 			</div>
 			<h3 class="block-title">Units</h3>
 		</div>

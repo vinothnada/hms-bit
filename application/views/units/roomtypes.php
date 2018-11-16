@@ -30,7 +30,10 @@
 <div class="block">
 	<div class="block-header">
 		<div class="block-options">
-		<button class="	btn btn-primary" data-toggle="modal" data-target="#modal-popin-addroom"><i class="glyphicon-plus"></i>&nbsp;Add new</button>
+		<button class="	btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-popin-addroom"><i class="glyphicon-plus"></i>&nbsp;Add new</button>
+        <?php $this->session->set_userdata('csvdata1',$roomtypes); ?>
+        &nbsp;
+        <a href="<?= site_url("reports/exportRoomtypes") ?>"><button class="btn btn-sm btn-danger pull-right" type="button" id="cid" ><i class="fa fa-file-pdf-o"></i>&nbsp; Export CSV</button></a>
 		</div>
 		<h3 class="block-title">Room Types</h3>
 	</div>
@@ -75,7 +78,10 @@
 <div class="block">
     <div class="block-header">
         <div class="block-options">
-        <button class=" btn btn-primary" data-toggle="modal" data-target="#modal-popin-addfloor"><i class="glyphicon-plus"></i>&nbsp;Add new</button>
+        <button class=" btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-popin-addfloor"><i class="glyphicon-plus"></i>&nbsp;Add new</button>
+        <?php $this->session->set_userdata('csvdata2',$roomtypes); ?>
+        &nbsp;
+        <a href="<?= site_url("reports/exportFloortypes") ?>"><button class="btn btn-sm btn-danger pull-right" type="button" id="cid" ><i class="fa fa-file-pdf-o"></i>&nbsp; Export CSV</button></a>        
         </div>
         <h3 class="block-title">Floors</h3>
     </div>

@@ -97,6 +97,74 @@ class Restaurant extends CI_Controller{
 
   }
 
+    public function advanceBooking(){
+
+      $data['tablesData'] = $this->mrestaurant->getRetaurantTableDataActive();
+      $data['tablebookings'] = $this->mcrud->getAllDataAscStatusActive('booking_restaurant','id');
+      $data['occupiedtbl'] = $this->mrestaurant->getAllDataAscStatusOccupied();
+      $data['expiredtbl'] = $this->mrestaurant->getAllDataAscStatusExpired();      
+      $this->load->view('includes/header_db');
+      $this->load->view('superadmin/navigation');
+      $this->load->view('restaurant/advanceBooking',$data);
+      $this->load->view('includes/footer_inc_form');          
+
+    }
+
+
+    public function createAdvanceBooking(){
+      $data = array(
+        'title'=>$_POST['title'],
+        'start'=>$_POST['start'],
+        'end'=>$_POST['end'],
+        'tbl_no'=>$_POST['tbl_no'],
+        'tbl_no_key'=>1,
+        'modified_By'=>$_POST['added_by'],
+        );
+      $result = $this->mcrud->addDataByForm('booking_restaurant',$data);
+      if ($result) {
+        echo 1;
+      }else{
+        echo 0;
+      }
+    }
+
+    public function confirmAdvanceBooking(){
+      $id = $_GET['id'];
+      $data = array(
+        'status'=>'Occupied',
+        );
+      $result = $this->mcrud->updateDataByForm('booking_restaurant',$data,array('id' => $id));
+      if ($result) {
+        echo 1;
+      }else{
+        echo 0;
+      }
+    }    
+
+    public function deleteAdvanceBooking(){
+      $id = $_GET['id'];
+      $data = array(
+        'status'=>'Deleted',
+        );
+      $result = $this->mcrud->updateDataByForm('booking_restaurant',$data,array('id' => $id));
+      if ($result) {
+        echo 1;
+      }else{
+        echo 0;
+      }
+    }
+
+    public function setAdbExpiration(){
+
+      $dateFor = $_GET["today"];
+      $result = $this->mrestaurant->setAdbExpiration($dateFor);
+      if ($result) {
+        echo 1;
+      }else{
+        echo 0;
+      }
+    }    
+
 }
 
 	

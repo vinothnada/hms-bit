@@ -98,7 +98,7 @@
    $this->form_validation->set_rules('name','name','required');
    $this->form_validation->set_rules('building','building','required');
    if ($this->form_validation->run() == FALSE) {
-    $this->session->set_userdata('error', ' Floor creation failed!');
+    $this->session->set_userdata('error', 'Please fill all fields!');
     redirect("units/types");
   } else {
     $data = array(

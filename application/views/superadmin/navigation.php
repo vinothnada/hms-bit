@@ -25,7 +25,7 @@
                                 </a>
 
                             </li>
-                            <li>
+                            <li id="test">
                                 <a data-toggle="theme" data-theme="<?= base_url(); ?>assets/css/themes/amethyst.min.css" tabindex="-1" href="javascript:void(0)">
                                     <i class="fa fa-circle text-amethyst pull-right"></i> <span class="font-w600">Amethyst</span>
                                 </a>
@@ -84,6 +84,9 @@
                                 <li>
                                     <a href="<?=site_url('taxservices');?>">Tax and services</a>
                                 </li>
+                                <li>
+                                    <a href="<?=site_url('messages');?>">Messages</a>
+                                </li>                                
                             </ul>
                         </li>
                         <li>
@@ -115,8 +118,11 @@
                                     <a href="<?=site_url('restaurant/tablemaster');?>">Table Master</a>
                                 </li>
                                 <li>
-                                    <a href="<?=site_url('restaurant/booking');?>">Booking</a>
-                                </li>                                        
+                                    <a href="<?=site_url('restaurant/advanceBooking');?>">Booking</a>
+                                </li>    
+                                <li>
+                                    <a href="<?=site_url('pos');?>">Point of Sales</a>
+                                </li>                                                                        
                             </ul>
                         </li>
                         <li>
@@ -126,7 +132,7 @@
                                     <a href="<?=site_url('bar/tablemaster');?>">Table Master</a>
                                 </li>
                                 <li>
-                                    <a href="<?=site_url('bar/booking');?>">Booking</a>
+                                    <a href="<?=site_url('bar/advanceBooking');?>">Booking</a>
                                 </li>                                        
                             </ul>
                         </li>
@@ -168,18 +174,21 @@
         <!-- Header Navigation Right -->
         <ul class="nav-header pull-right">
             <li>
-            <span class="badge badge-primary pull-right">3</span>
+
                 <div class="btn-group">
                     <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button">
                         <img src="<?= base_url(); ?>assets/img/avatars/avatar10.jpg" alt="Avatar">
                         <span class="caret"></span>
                     </button>
+            <span class="badge badge-primary pull-right" id="newMessages"></span>
+            &nbsp;
+            <span class="badge badge-danger pull-right" id="pendingMessages"></span>                    
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">Notifications</li>
                         <li>
-                            <a tabindex="-1" href="base_pages_inbox.html">
+                            <a tabindex="-1" href="<?= site_url("messages") ?>">
                                 <i class="si si-envelope-open pull-right"></i>
-                                <span class="badge badge-primary pull-right">3</span>Inbox
+                                Messages
                             </a>
                         </li>
                         <li class="divider"></li>
@@ -190,7 +199,7 @@
                             </a>
                         </li>
                         <li>
-                            <a tabindex="-1" href="base_pages_login.html">
+                            <a tabindex="-1" href="<?= site_url("login/signout");?>">
                                 <i class="si si-logout pull-right"></i>Log out
                             </a>
                         </li>
@@ -214,25 +223,12 @@
                     <i class="fa fa-ellipsis-v"></i>
                 </button>
             </li>
-            <li>
-                <!-- Opens the Apps modal found at the bottom of the page, before including JS code -->
-                <button class="btn btn-default pull-right" data-toggle="modal" data-target="#apps-modal" type="button">
-                    <i class="si si-grid"></i>
-                </button>
-            </li>
-            <li class="visible-xs">
-                <!-- Toggle class helper (for .js-header-search below), functionality initialized in App() -> uiToggleClass() -->
-                <button class="btn btn-default" data-toggle="class-toggle" data-target=".js-header-search" data-class="header-search-xs-visible" type="button">
-                    <i class="fa fa-search"></i>
-                </button>
-            </li>
-            <li class="js-header-search header-search">
-                <form class="form-horizontal" action="base_pages_search.html" method="post">
-                    <div class="form-material form-material-primary input-group remove-margin-t remove-margin-b">
-                        <input class="form-control" type="text" id="base-material-text" name="base-material-text" placeholder="Search..">
-                        <span class="input-group-addon"><i class="si si-magnifier"></i></span>
-                    </div>
-                </form>
+
+            <li class="hidden-xs hidden-sm">
+                    <a class="h5" href="#">
+                        <i class="fa fa-user text-primary"></i> <span class="h5 font-w500 text-primary">Welcome <?php echo $this->session->userdata('logged_user'); ?></span>
+                    </a>
+
             </li>
         </ul>
         <!-- END Header Navigation Left -->
@@ -242,8 +238,25 @@
 
 <script >
     
+$("document").ready(function(){
+        var url = "<?= site_url("messages/getCountsForPages") ?>";
+        $.ajax({
+            type: "GET",
+            url: url,
+            dataType:'json',
+            success: function(data){
+                if (data.countAllNewMessages > 0) {
+                    $("#newMessages").html(data.countAllNewMessages);
+                }else{
+                    $("#newMessages").html("");
+                }
 
-    $('.linkstohref a').click(function(){
-        $(this).addClass('active');
-    })
+                if (data.countCheckouNewMessages > 0) {
+                    $("#pendingMessages").html(data.countCheckouNewMessages);
+                }else{
+                    $("#pendingMessages").html("");
+                }
+            }
+        });      
+})
 </script>

@@ -30,7 +30,10 @@
 <div class="block">
 	<div class="block-header">
 		<div class="block-options">
-          <button class="	btn btn-primary" data-toggle="modal" data-target="#modal-popin-addNewMenu"><i class="glyphicon-plus"></i>&nbsp;Add new</button>
+          <button class="	btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-popin-addNewMenu"><i class="glyphicon-plus"></i>&nbsp;Add new</button>
+      <?php $this->session->set_userdata('csvdata',$menumaster); ?>
+        &nbsp;
+        <a href="<?= site_url("reports/exportMenuMaster") ?>"><button class="btn btn-sm btn-danger pull-right" type="button" id="cid" ><i class="fa fa-file-pdf-o"></i>&nbsp; Export CSV</button></a>          
       </div>
   </div>
   <div class="block-content">

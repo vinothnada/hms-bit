@@ -47,6 +47,11 @@ class Mbooking extends CI_Model{
     public function getRoomsOfSameTyeSameStatus($status,$roomtype){
         $query = $this->db->get_where('room_master', array('availibility' => $status,'roomtype' => $roomtype));
         return $query->result();
+    }
+
+    public function getInsBookingsWithCustomer(){
+        $query = $this->db->query("SELECT b.booking_no,b.room_no,b.guest_id,a.title,a.firstname from guests as a,booking_room as b where b.guest_id=a.id and b.status = 'in'");
+        return $query->result();           
     }    
 
 

@@ -82,8 +82,8 @@ class Sadmin extends CI_Controller{
         }else{        
          $this->form_validation->set_rules('empid','empid','required');
          $this->form_validation->set_rules('name','name','required');
-         $this->form_validation->set_rules('tp','tp','role');
-         $this->form_validation->set_rules('role','Delivery_Date','required');
+         $this->form_validation->set_rules('tp','tp','required');
+         $this->form_validation->set_rules('role','role','required');
          $this->form_validation->set_rules('department','department','required');
          $this->form_validation->set_rules('Status','Status','required');
 

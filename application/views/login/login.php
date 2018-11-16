@@ -27,8 +27,6 @@
                             }?>                                
                             <!-- END Login Title -->
                             <!-- Login Form -->
-                            <!-- jQuery Validation (.js-validation-login class is initialized in js/pages/base_pages_login.js) -->
-                            <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
                             <form class="js-validation-login form-horizontal push-30-t push-50" action="<?=base_url();?>index.php/login/signup/" method="post">
                                 <div class="form-group">
                                     <div class="col-xs-12">

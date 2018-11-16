@@ -261,10 +261,25 @@
         $updateOldRoom = $this->mcrud->updateDataByForm('room_master',$roomData3,array('roomno' => $this->input->post('currentRoomNo')));
         
         $bookingData = array(
-          'roomno'=>$this->input->post('newRoomNo'),
+          'room_no'=>$this->input->post('newRoomNo'),
           );
 
         $chaneBookingStatus = $this->mcrud->updateDataByForm('booking_room',$bookingData,array('booking_no' => $this->input->post('bookingno')));
+
+        $currRoom = $this->input->post('currentRoomNo');
+        $chkoutString = "Checkout Alert Room no ".$currRoom;
+        $chkoutStringmsg = "Room no ".$currRoom." has been checked out";
+
+        $chkoutData = array(
+            'user_id_from'=>'7',
+            'user_id_to'=>'7',
+            'type'=>'CHK',
+            'subject' => $chkoutString,
+            'message' => $chkoutStringmsg,
+            'status'=>'New'
+          );
+
+        $chaneBookingStatus = $this->mcrud->addDataByForm('messages',$chkoutData);
 
       }
 

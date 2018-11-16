@@ -1,0 +1,6 @@
+<?php 
+
+
+$navigation = 'superadmin/navigation'
+
+ ?>
